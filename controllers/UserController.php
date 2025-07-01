@@ -1,7 +1,26 @@
 <?php
 require_once __DIR__ . '/../models/User.php';
 
+/**
+ * Contrôleur gérant les opérations liées aux utilisateurs.
+ */
 class UserController {
+
+    /**
+     * Met à jour le mot de passe d'un utilisateur via une requête POST (JSON).
+     *
+     * Cette méthode lit un corps JSON contenant les champs `email` et `password`,
+     * vérifie leur présence, et appelle la méthode du modèle User pour
+     * enregistrer le mot de passe (après hashage côté modèle).
+     *
+     * Réponses HTTP possibles :
+     * - 200 : Succès
+     * - 400 : Email ou mot de passe manquant
+     * - 404 : Utilisateur introuvable
+     * - 405 : Méthode HTTP non autorisée
+     *
+     * @return void
+     */
     public function updatePassword() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);

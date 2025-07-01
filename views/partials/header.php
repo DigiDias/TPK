@@ -15,13 +15,12 @@
                     <a href="index.php?action=participations">Participations</a>
                     <a href="index.php?action=logout" class="btn">Déconnexion</a>
                 </nav>
+             <p>Bonjour <?= htmlspecialchars($_SESSION['user']['prenom']) ?> <?= htmlspecialchars($_SESSION['user']['nom']) ?></p>
             <?php else: ?>
                 <a href="index.php?action=create-trajet" class="btn">Créer un trajet</a>
-                <span class="user-name">
-                    <?= htmlspecialchars($_SESSION['user']['prenom']) ?>
-                    <?= htmlspecialchars($_SESSION['user']['nom']) ?>
-                </span>
-                <a href="index.php?action=logout" class="btn">Déconnexion</a>
+                <span class="user-name">Bonjour <?= htmlspecialchars($_SESSION['user']['prenom']) ?> <?= htmlspecialchars($_SESSION['user']['nom']) ?></span>
+                <a href="index.php?action=logout" class="btn">Déconnexion</a
+                
             <?php endif; ?>
         <?php endif; ?>
     </div>
