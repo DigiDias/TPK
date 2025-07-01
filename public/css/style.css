@@ -1,40 +1,4 @@
-.tpk-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #385050;
-  color: white;
-}
-.tpk-header .logo {
-  font-size: 1.8rem;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-.tpk-header .btn {
-  background-color: #00497c;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  text-decoration: none;
-  margin-left: 1rem;
-  transition: background-color 0.3s ease;
-}
-.tpk-header .btn:hover {
-  background-color: #1976d2;
-}
-.tpk-header .admin-nav a {
-  margin-left: 1rem;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-}
-.tpk-header .user-name {
-  margin-left: 1rem;
-  font-weight: 600;
-}
+@import 'header';
 
 body {
   font-family: Arial, sans-serif;
