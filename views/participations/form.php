@@ -1,21 +1,38 @@
+<?php
+// Sécurité : vérifier que $id_trajet est bien défini
+if (!isset($id_trajet)) {
+    echo '<div class="alert alert-danger text-center mt-5">Erreur : Trajet non spécifié.</div>';
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Participer à un trajet</title>
+    <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Participer à un trajet</h1>
+<body class="bg-light">
 
-    <form action="/index.php?action=storeParticipation" method="POST">
-        <input type="hidden" name="id_trajet" value="<?= htmlspecialchars($id_trajet) ?>">
+<div class="container mt-5">
+    <h1 class="mb-4">Participer à un trajet</h1>
 
-        <label for="id_user">Utilisateur :</label>
-        <input type="number" name="id_user" id="id_user" required><br><br>
+    <form method="post" action="index.php?action=store-participation" class="card p-4 shadow-sm rounded">
+        
+        <input type="hidden" name="id_trajet" value="<?= htmlspecialchars($id_trajet ?? '') ?>">
 
-        <button type="submit">Participer</button>
+        <p class="mb-3">Confirmez votre participation à ce trajet.</p>
+
+        <button type="submit" class="btn btn-primary">Valider ma participation</button>
+        <a href="index.php?action=listTrajets" class="btn btn-outline-secondary ms-2">← Retour à la liste des trajets</a>
     </form>
+</div>
 
-    <p><a href="/index.php">← Retour à la liste des trajets</a></p>
+<script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<pre>
+<?php print_r($_SESSION); ?>
+</pre>
 </html>
+

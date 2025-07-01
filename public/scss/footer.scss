@@ -1,0 +1,21 @@
+footer {
+  background-color: #f1f8fc;
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 1px solid #dee2e6;
+
+  p {
+    font-size: 0.65rem;
+    margin: 0;
+    color: #384050;
+  }
+
+  a {
+    color: #0074c7;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

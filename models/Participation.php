@@ -1,35 +1,33 @@
 <?php
 
-require_once __DIR__ . '/../config/database.php';
-
 /**
- * Classe Participation
- * 
- * Gère les interactions avec la table `participations`.
+ * Modèle Participation
+ * Gère les interactions avec la table `participations`
  */
 class Participation {
 
     /**
-     * @var PDO Connexion à la base de données
+     * @var PDO Connexion PDO à la base
      */
-    private $db;
+    private PDO $db;
 
     /**
-     * Constructeur : établit la connexion à la base de données.
+     * Constructeur avec injection PDO
+     *
+     * @param PDO $pdo Connexion à la base de données
      */
-    public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+    public function __construct(PDO $pdo) {
+        $this->db = $pdo;
     }
 
     /**
-     * Ajoute une participation à un trajet pour un utilisateur.
+     * Enregistre une nouvelle participation
      *
-     * @param int $id_user L'identifiant de l'utilisateur
-     * @param int $id_trajet L'identifiant du trajet
-     * @return bool True si l'insertion a réussi, false sinon
+     * @param int $id_user Identifiant de l'utilisateur
+     * @param int $id_trajet Identifiant du trajet
+     * @return bool True si succès, false sinon
      */
-    public function ajouterParticipation($id_user, $id_trajet) {
+    public function ajouterParticipation(int $id_user, int $id_trajet): bool {
         $sql = "INSERT INTO participations (id_user, id_trajet, date_inscription)
                 VALUES (:id_user, :id_trajet, NOW())";
 
@@ -41,11 +39,11 @@ class Participation {
     }
 
     /**
-     * Récupère toutes les participations.
+     * Récupère toutes les participations
      *
-     * @return array Liste des participations
+     * @return array
      */
-    public function getAll() {
+    public function getAll(): array {
         $sql = "SELECT * FROM participations";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

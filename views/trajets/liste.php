@@ -1,6 +1,7 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -38,4 +39,5 @@
         <?php endforeach; ?>
     </table>
 </body>
+<?php include __DIR__ . '/../partials/footer.php'; ?>
 </html>

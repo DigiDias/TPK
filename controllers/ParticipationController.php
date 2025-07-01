@@ -3,36 +3,89 @@
 require_once __DIR__ . '/../models/Participation.php';
 
 /**
- * Contrôleur pour la gestion des participations aux trajets.
+ * Contrôleur ParticipationController
+ * Gère les inscriptions aux trajets
  */
 class ParticipationController
 {
     /**
-     * Affiche le formulaire d’inscription à un trajet.
-     *
-     * @param int $id_trajet L’identifiant du trajet sélectionné
+     * @var PDO Connexion à la base de données
      */
-    public function form($id_trajet)
+    private PDO $pdo;
+
+    /**
+     * Constructeur du contrôleur
+     *
+     * @param PDO $pdo Connexion PDO à la base de données
+     */
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    /**
+     * Affiche le formulaire de participation à un trajet
+     *
+     * @param int $id_trajet Identifiant du trajet concerné
+     * @return void
+     */
+    public function form(int $id_trajet): void
     {
         require __DIR__ . '/../views/participations/form.php';
     }
 
     /**
-     * Traite la soumission du formulaire de participation.
+     * Enregistre la participation de l'utilisateur au trajet sélectionné
+     *
+     * @return void
      */
-    public function store()
+    public function store(): void
     {
-        if (isset($_POST['id_user'], $_POST['id_trajet'])) {
-            $participationModel = new Participation();
-            $success = $participationModel->ajouterParticipation($_POST['id_user'], $_POST['id_trajet']);
-
-            if ($success) {
-                echo "Participation enregistrée avec succès.";
-            } else {
-                echo "Erreur lors de l'enregistrement.";
-            }
-        } else {
-            echo "Paramètres manquants.";
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
+
+        // Vérification des paramètres obligatoires
+        if (!isset($_SESSION['user']['id']) || !isset($_POST['id_trajet'])) {
+            $_SESSION['error'] = "Vous devez être connecté pour participer à un trajet.";
+            header("Location: index.php?action=login");
+            exit;
+        }
+
+        $idUtilisateur = intval($_SESSION['user']['id']);
+        $idTrajet = intval($_POST['id_trajet']);
+
+        // Vérifie si l'utilisateur a déjà participé à ce trajet
+        $check = $this->pdo->prepare("SELECT * FROM participations WHERE id_user = ? AND id_trajet = ?");
+        $check->execute([$idUtilisateur, $idTrajet]);
+
+        if ($check->fetch()) {
+            $_SESSION['error'] = "Vous êtes déjà inscrit à ce trajet.";
+            header("Location: index.php?action=listTrajets");
+            exit;
+        }
+
+        // Vérifie le nombre de places disponibles
+        $placesStmt = $this->pdo->prepare("SELECT places_dispo FROM trajets WHERE id_trajet = ?");
+        $placesStmt->execute([$idTrajet]);
+        $places = $placesStmt->fetchColumn();
+
+        if (!$places || $places <= 0) {
+            $_SESSION['error'] = "Aucune place disponible pour ce trajet.";
+            header("Location: index.php?action=listTrajets");
+            exit;
+        }
+
+        // Insère la participation
+        $participationModel = new Participation($this->pdo);
+        $participationModel->ajouterParticipation($idUtilisateur, $idTrajet);
+
+        // Met à jour les places disponibles
+        $update = $this->pdo->prepare("UPDATE trajets SET places_dispo = places_dispo - 1 WHERE id_trajet = ?");
+        $update->execute([$idTrajet]);
+
+        $_SESSION['success'] = "Participation enregistrée avec succès.";
+        header("Location: index.php?action=listTrajets");
+        exit;
     }
 }
