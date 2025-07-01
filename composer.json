@@ -4,5 +4,9 @@
     },
     "require-dev": {
         "phpdocumentor/phpdocumentor": "*"
-    }
+    },
+
+    "scripts": {
+    "serve": "php -S localhost:8000"
+}
 }
