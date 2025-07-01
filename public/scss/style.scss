@@ -1,0 +1,65 @@
+// Import des modules SCSS
+@import 'header';
+
+$primary-color: #2c3e50;
+$secondary-color: #ecf0f1;
+$accent-color: #3498db;
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: $secondary-color;
+  color: $primary-color;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: $primary-color;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: $accent-color;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($accent-color, 10%);
+    }
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background-color: $primary-color;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

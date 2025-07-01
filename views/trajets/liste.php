@@ -1,8 +1,12 @@
+<?php include __DIR__ . '/../partials/header.php'; ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Liste des trajets</title>
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
     <h1>Liste des trajets</h1>
