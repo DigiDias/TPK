@@ -14,7 +14,7 @@ class AuthController
      *
      * @return void
      */
-    public function login()
+    public function login(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
@@ -23,20 +23,31 @@ class AuthController
             $auth = new Auth();
             $user = $auth->verifyCredentials($email, $password);
 
-            if ($user) {
-                session_start();
-                $_SESSION['user'] = $user;
+            if ($user && isset($user['id_user'])) {
+                // Démarrage de la session si non encore démarrée
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                // Enregistrement des infos utilisateur dans la session
+                $_SESSION['user'] = [
+                    'id'     => $user['id_user'],
+                    'prenom' => $user['prenom'],
+                    'nom'    => $user['nom'],
+                    'email'  => $user['email'],
+                    'role'   => $user['role'] ?? 'user'
+                ];
 
                 // Redirection après connexion réussie
                 header("Location: index.php?action=listTrajets");
                 exit;
             } else {
-                // Connexion échouée : email ou mot de passe incorrect
+                // Échec de connexion
                 $error = "Email ou mot de passe incorrect.";
                 require __DIR__ . '/../views/Auth/Auth.php';
             }
         } else {
-            // Affichage du formulaire de connexion
+            // Affichage du formulaire
             $error = "";
             require __DIR__ . '/../views/Auth/Auth.php';
         }

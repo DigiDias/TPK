@@ -29,10 +29,34 @@ class ParticipationController
      * @param int $id_trajet Identifiant du trajet concerné
      * @return void
      */
-    public function form(int $id_trajet): void
-    {
-        require __DIR__ . '/../views/participations/form.php';
+public function form(int $id_trajet): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
+
+    // Vérifie si l'utilisateur est connecté
+    if (!isset($_SESSION['user']['id'])) {
+        $_SESSION['error'] = "Vous devez être connecté pour participer à un trajet.";
+        header("Location: index.php?action=login");
+        exit;
+    }
+
+    $idUtilisateur = intval($_SESSION['user']['id']);
+
+    // Vérifie si l'utilisateur a déjà participé à ce trajet
+    $check = $this->pdo->prepare("SELECT * FROM participations WHERE id_user = ? AND id_trajet = ?");
+    $check->execute([$idUtilisateur, $id_trajet]);
+
+    if ($check->fetch()) {
+        $_SESSION['error'] = "Vous êtes déjà inscrit à ce trajet.";
+        header("Location: index.php?action=listTrajets");
+        exit;
+    }
+
+    // Sinon, affiche le formulaire de participation
+    require __DIR__ . '/../views/participations/form.php';
+}
 
     /**
      * Enregistre la participation de l'utilisateur au trajet sélectionné
@@ -44,6 +68,12 @@ class ParticipationController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        // DEBUG : Affiche la session en cours pour vérifier l'état de l'utilisateur connecté
+        // echo "<pre>SESSION (dans store) : ";
+        // print_r($_SESSION);
+        // echo "</pre>";
+        // exit;
 
         // Vérification des paramètres obligatoires
         if (!isset($_SESSION['user']['id']) || !isset($_POST['id_trajet'])) {

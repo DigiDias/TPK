@@ -1,4 +1,17 @@
 <?php
+
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+//echo "<pre>SESSION (dans form.php) : ";
+//print_r($_SESSION);
+//echo "</pre>";
+
+echo "<pre>SESSION (form.php) : ";
+print_r($_SESSION);
+echo "</pre>";
+
 // Sécurité : vérifier que $id_trajet est bien défini
 if (!isset($id_trajet)) {
     echo '<div class="alert alert-danger text-center mt-5">Erreur : Trajet non spécifié.</div>';
@@ -31,8 +44,6 @@ if (!isset($id_trajet)) {
 
 <script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<pre>
-<?php print_r($_SESSION); ?>
-</pre>
+
 </html>
 
