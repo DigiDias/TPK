@@ -8,9 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 //print_r($_SESSION);
 //echo "</pre>";
 
-echo "<pre>SESSION (form.php) : ";
-print_r($_SESSION);
-echo "</pre>";
 
 // Sécurité : vérifier que $id_trajet est bien défini
 if (!isset($id_trajet)) {

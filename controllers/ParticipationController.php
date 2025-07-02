@@ -38,7 +38,7 @@ public function form(int $id_trajet): void
     // Vérifie si l'utilisateur est connecté
     if (!isset($_SESSION['user']['id'])) {
         $_SESSION['error'] = "Vous devez être connecté pour participer à un trajet.";
-        header("Location: index.php?action=login");
+        header("Location: index.php?action=listTrajets");
         exit;
     }
 

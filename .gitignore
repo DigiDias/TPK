@@ -1,0 +1,25 @@
+# Fichiers sensibles et d'environnement
+.env
+
+# Dépendances PHP
+/vendor/
+
+# Cache et logs éventuels
+*.log
+*.cache
+
+# Dossiers de tests (si tu veux les exclure de prod)
+tests/
+
+# Fichiers de documentation générés
+/phpdoc/
+*.phpdoc
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Autres fichiers temporaires
+*.bak
+*.tmp
+*.swp

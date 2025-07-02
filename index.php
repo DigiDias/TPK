@@ -3,6 +3,9 @@
  * Routeur principal
  * Initialise la session, charge la connexion à la BDD et redirige selon l’action
  */
+// Redirection immédiate vers liste.php
+//header('Location: liste.php');
+//exit;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

@@ -4,7 +4,8 @@
         "twbs/bootstrap": "*"
     },
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "*"
+        "phpdocumentor/phpdocumentor": "*",
+        "phpunit/phpunit": "*"
     },
 
     "scripts": {
