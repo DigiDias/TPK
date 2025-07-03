@@ -8,8 +8,8 @@
         <?php else: ?>
             <?php if ($_SESSION['user']['role'] === 'admin'): ?>
                 <nav class="admin-nav">
-                  <a href="index.php?action=utilisateurs">Utilisateurs</a>
-                    <a href="index.php?action=agences">Agences</a>
+                  <a href="index.php?action=ListUsers">Utilisateurs</a>
+                    <a href="index.php?action=List-agences">Agences</a>
                     <a href="index.php?action=trajets">Trajets</a>
          
                     

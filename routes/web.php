@@ -1,13 +1,16 @@
 <?php
 
+// Import des contrôleurs
 use Controllers\TrajetController;
 use Controllers\ParticipationController;
 use Controllers\UserController;
 use Controllers\AuthController;
+use Controllers\AgenceController; // ✅ Important pour éviter l'erreur "Class not found"
 
-// Action demandée
+// Détermination de l'action demandée
 $action = $_GET['action'] ?? 'listTrajets';
 
+// Routeur principal
 switch ($action) {
     case 'login':
         (new AuthController())->login();
@@ -20,6 +23,14 @@ switch ($action) {
 
     case 'listTrajets':
         (new TrajetController())->liste();
+        break;
+
+    case 'ListUsers':
+        (new UserController())->AllUsers();
+        break;
+
+    case 'List-agences': // ✅ Le nom est OK si tu accèdes avec ?action=List-agences
+        (new AgenceController())->allAgences();
         break;
 
     case 'creer':
@@ -62,9 +73,25 @@ switch ($action) {
         (new UserController())->updatePassword();
         break;
 
-        case 'supprimer':
-    (new TrajetController())->supprimer($_GET['id_trajet']);
+    case 'supprimer':
+        if (isset($_GET['id_trajet'])) {
+            (new TrajetController())->supprimer((int)$_GET['id_trajet']);
+        } else {
+            echo "ID de trajet manquant.";
+        }
+        break;
+
+     case 'creerAgence':
+    (new AgenceController())->creer();
     break;
+
+case 'modifierAgence':
+    (new AgenceController())->modifier((int)$_GET['id_agence']);
+    break;
+
+case 'supprimerAgence':
+    (new AgenceController())->supprimer((int)$_GET['id_agence']);
+    break;   
 
     default:
         echo "Action inconnue.";

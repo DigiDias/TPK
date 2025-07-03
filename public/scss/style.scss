@@ -9,10 +9,14 @@ $bouton-creer:#82b864;
 
 
 .fond{
-  background-color: #384050;
-  color: white;
+  background-color: #384050 !important;
+  color: white !important;
 }
 
+table thead.fond {
+  background-color: #384050 !important;
+  color: white !important;
+}
 
 
 .alerte{

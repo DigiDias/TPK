@@ -123,8 +123,14 @@ if (session_status() === PHP_SESSION_NONE) {
     </button>
       <?php endif; ?>
 
-    <!-- Boutons Modifier et Supprimer (uniquement pour le créateur) -->
-    <?php if (isset($_SESSION['user']) && $_SESSION['user']['id'] == $trajet['id_createur']): ?>
+  <!-- Boutons Modifier et Supprimer (pour le créateur OU un admin) -->
+    <?php if (
+        isset($_SESSION['user']) &&
+        (
+            $_SESSION['user']['id'] == $trajet['id_createur'] ||
+            $_SESSION['user']['role'] === 'admin'
+        )
+    ): ?>
        <a href="index.php?action=modifier&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-warning">
     <i class="bi bi-pencil"></i>
 </a>

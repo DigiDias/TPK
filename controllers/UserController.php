@@ -50,4 +50,19 @@ class UserController {
             echo json_encode(["error" => "Méthode non autorisée."]);
         }
     }
+
+    public function AllUsers(): void
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $userModel = new \Models\User();
+        $users = $userModel->getAllUser();
+
+        // Chargement de la vue avec les données utilisateurs
+        require __DIR__ . '/../views/users/list-users.php';
+    } else {
+        // Requête non autorisée
+        http_response_code(405);
+        echo "Méthode non autorisée.";
+    }
+}
 }
