@@ -19,4 +19,11 @@ class User {
 
         return $stmt->rowCount() > 0;
     }
+
+     public function getAllUser(): array {
+        $sql = "SELECT * FROM users";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
