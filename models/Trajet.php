@@ -40,6 +40,7 @@ class Trajet
                        a1.nom AS agence_depart, 
                        a2.nom AS agence_arrivee,
                        u.nom AS createur_nom,
+                       u.prenom as createur_prenom,
                        u.id_user AS id_createur_user
                 FROM trajets t
                 JOIN agences a1 ON t.agence_depart_id = a1.id_agence
@@ -81,7 +82,7 @@ class Trajet
                     heure_depart,
                     date_arrivee,
                     heure_arrivee,
-                    places_total,
+                    
                     places_dispo,
                     contact_tel,
                     contact_email,
@@ -93,7 +94,7 @@ class Trajet
                     :heure_depart,
                     :date_arrivee,
                     :heure_arrivee,
-                    :places_total,
+                   
                     :places_dispo,
                     :tel,
                     :email,
@@ -109,7 +110,7 @@ class Trajet
             ':heure_depart'  => $data['heure_depart'],
             ':date_arrivee'  => $data['date_arrivee'],
             ':heure_arrivee' => $data['heure_arrivee'],
-            ':places_total'  => $data['places_total'],
+            
             ':places_dispo'  => $data['places_dispo'],
             ':tel'           => $data['contact_tel'],
             ':email'         => $data['contact_email'],

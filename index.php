@@ -39,7 +39,7 @@ switch ($action) {
         $controller->liste();
         break;
 
-    case 'creer':
+case 'creer':
         $controller = new TrajetController();
         $controller->creer();
         break;
@@ -71,10 +71,13 @@ switch ($action) {
         }
         break;
 
-    case 'store-participation':
-        $controller = new ParticipationController($pdo);
-        $controller->store();
-        break;
+case 'store-trajet':
+    $controller = new TrajetController();
+    $controller->store();
+    break;
+
+        
+  
 
     case 'update_password':
         $controller = new UserController();

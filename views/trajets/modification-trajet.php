@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once __DIR__ . '/../../models/Trajet.php';
 require_once __DIR__ . '/../../models/Agence.php';
@@ -8,7 +10,7 @@ $trajetModel = new Trajet();
 $agenceModel = new Agence();
 
 $trajet = $trajetModel->getById($_GET['id_trajet']);
-$agences = $agenceModel->getAll(); // pour les listes déroulantes
+$agences = $agenceModel->getAll();
 
 if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
     die('Accès non autorisé.');
@@ -20,92 +22,86 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
 <head>
     <meta charset="UTF-8">
     <title>Modifier le trajet</title>
+     <link rel="stylesheet" href="public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container my-5">
+<body>
 
-<?php if (!empty($_SESSION['error'])): ?>
-    <div class="alert alert-danger text-center">
-        <?= htmlspecialchars($_SESSION['error']) ?>
-        <?php unset($_SESSION['error']); ?>
-    </div>
-<?php endif; ?>
+<div class="container my-5">
 
-<?php if (!empty($_SESSION['success'])): ?>
-    <div class="alert alert-success text-center">
-        <?= htmlspecialchars($_SESSION['success']) ?>
-        <?php unset($_SESSION['success']); ?>
-    </div>
-<?php endif; ?>
+    <h1 class="text-center mb-4 fond">Modifier le trajet</h1>
 
-    <h1 class="mb-4">Modifier le trajet</h1>
+    <?php if (!empty($_SESSION['error'])): ?>
+        <div class="alert alert-danger text-center">
+            <?= htmlspecialchars($_SESSION['error']) ?>
+            <?php unset($_SESSION['error']); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['success'])): ?>
+        <div class="alert alert-success text-center">
+            <?= htmlspecialchars($_SESSION['success']) ?>
+            <?php unset($_SESSION['success']); ?>
+        </div>
+    <?php endif; ?>
 
     <form method="post" action="index.php?action=updateTrajet&id_trajet=<?= $trajet['id_trajet'] ?>">
-        
-        <!-- Agence départ -->
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Agence de départ</label>
-            <div class="col-sm-6">
-                <select name="agence_depart_id" class="form-select">
-                    <?php foreach ($agences as $agence): ?>
-                        <option value="<?= $agence['id_agence'] ?>" <?= $agence['id_agence'] == $trajet['agence_depart_id'] ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($agence['nom']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
 
-        <!-- Agence arrivée -->
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Agence d'arrivée</label>
-            <div class="col-sm-6">
-                <select name="agence_arrivee_id" class="form-select">
-                    <?php foreach ($agences as $agence): ?>
-                        <option value="<?= $agence['id_agence'] ?>" <?= $agence['id_agence'] == $trajet['agence_arrivee_id'] ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($agence['nom']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
-
-        <!-- Date et heure de départ -->
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Date de départ</label>
-            <div class="col-sm-3">
-                <input type="date" name="date_depart" class="form-control" value="<?= $trajet['date_depart'] ?>">
-            </div>
-            <div class="col-sm-3">
-                <input type="time" name="heure_depart" class="form-control" value="<?= $trajet['heure_depart'] ?>">
-            </div>
-        </div>
-
-        <!-- Date et heure d’arrivée -->
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Date d’arrivée</label>
-            <div class="col-sm-3">
-                <input type="date" name="date_arrivee" class="form-control" value="<?= $trajet['date_arrivee'] ?>">
-            </div>
-            <div class="col-sm-3">
-                <input type="time" name="heure_arrivee" class="form-control" value="<?= $trajet['heure_arrivee'] ?>">
-            </div>
-        </div>
-
-
-              <!-- Nbe de Places Disponibles -->
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Nbe de Places Disponible</label>
-            <div class="col-sm-3">
-                <input type="text" name="places_dispo" class="form-control" value="<?= $trajet['places_dispo'] ?>">
-            </div>
-         
+        <div class="mb-3">
+            <label for="agence_depart_id" class="form-label">Agence de départ</label>
+            <select name="agence_depart_id" id="agence_depart_id" class="form-select" required>
+                <?php foreach ($agences as $agence): ?>
+                    <option value="<?= $agence['id_agence'] ?>" <?= $agence['id_agence'] == $trajet['agence_depart_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($agence['nom']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            <label for="agence_arrivee_id" class="form-label">Agence d'arrivée</label>
+            <select name="agence_arrivee_id" id="agence_arrivee_id" class="form-select" required>
+                <?php foreach ($agences as $agence): ?>
+                    <option value="<?= $agence['id_agence'] ?>" <?= $agence['id_agence'] == $trajet['agence_arrivee_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($agence['nom']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="date_depart" class="form-label">Date de départ</label>
+                <input type="date" name="date_depart" id="date_depart" class="form-control" value="<?= $trajet['date_depart'] ?>" required>
+            </div>
+            <div class="col">
+                <label for="heure_depart" class="form-label">Heure de départ</label>
+                <input type="time" name="heure_depart" id="heure_depart" class="form-control" value="<?= $trajet['heure_depart'] ?>" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="date_arrivee" class="form-label">Date d’arrivée</label>
+                <input type="date" name="date_arrivee" id="date_arrivee" class="form-control" value="<?= $trajet['date_arrivee'] ?>" required>
+            </div>
+            <div class="col">
+                <label for="heure_arrivee" class="form-label">Heure d’arrivée</label>
+                <input type="time" name="heure_arrivee" id="heure_arrivee" class="form-control" value="<?= $trajet['heure_arrivee'] ?>" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="places_dispo" class="form-label">Places disponibles</label>
+            <input type="number" name="places_dispo" id="places_dispo" class="form-control" value="<?= $trajet['places_dispo'] ?>" min="1" required>
+        </div>
+
+        <div class="d-flex justify-content-between">
             <a href="index.php?action=listTrajets" class="btn btn-secondary">Annuler</a>
+            <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
         </div>
     </form>
+</div>
+
 </body>
 </html>

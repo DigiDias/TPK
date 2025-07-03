@@ -44,7 +44,20 @@ if (session_status() === PHP_SESSION_NONE) {
 <?php endif; ?>
 
 
-        <h1 class="mb-4">Trajets proposés</h1>
+
+<div>          <?php if (!isset($_SESSION['user'])): ?>
+    <div class="alerte">
+        Pour obtenir plus d'informations sur les trajets, veuillez vous connecter.
+    </div>
+<?php else: ?>
+    <h1 class="mb-4">Trajets proposés</h1>
+<?php endif; ?>
+</div>
+
+
+
+      
+
 
 
 
@@ -59,8 +72,10 @@ if (session_status() === PHP_SESSION_NONE) {
                     <th>Date</th>
                     <th>Heure</th>
                     <th>Places dispo</th>
-                    <th>email</th>
-                    <th>Action</th>
+                
+                                       <?php if (isset($_SESSION['user'])): ?>
+                        <th>Action</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -76,7 +91,9 @@ if (session_status() === PHP_SESSION_NONE) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
       <div class="modal-body">
-        <p><strong>Créateur :</strong> <?= htmlspecialchars($trajet['createur_nom'] ?? 'N/A') ?></p>
+      <p><strong>Créateur :</strong>
+    <?= htmlspecialchars(($trajet['createur_prenom'] ?? '') . ' ' . ($trajet['createur_nom'] ?? '')) ?: 'N/A' ?>
+</p>
         <p><strong>Email :</strong> <?= htmlspecialchars($trajet['contact_email']) ?></p>
         <p><strong>Téléphone :</strong> <?= htmlspecialchars($trajet['contact_tel']) ?></p>
         <p><strong>Places disponibles :</strong> <?= htmlspecialchars($trajet['places_dispo']) ?></p>
@@ -96,12 +113,15 @@ if (session_status() === PHP_SESSION_NONE) {
                         <td><?= htmlspecialchars($trajet['date_arrivee']) ?></td>
                         <td><?= htmlspecialchars($trajet['heure_arrivee']) ?></td>
                         <td><?= htmlspecialchars($trajet['places_dispo']) ?></td>
-                        <td><?= htmlspecialchars($trajet['contact_email']) ?></td>
+                   
+                        
+                         <?php if (isset($_SESSION['user'])): ?>
                         <td>
     <!-- Bouton Voir (toujours visible) -->
     <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVoir<?= $trajet['id_trajet'] ?>">
         <i class="bi bi-eye"></i>
     </button>
+      <?php endif; ?>
 
     <!-- Boutons Modifier et Supprimer (uniquement pour le créateur) -->
     <?php if (isset($_SESSION['user']) && $_SESSION['user']['id'] == $trajet['id_createur']): ?>

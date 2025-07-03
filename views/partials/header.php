@@ -17,7 +17,7 @@
                     <a href="index.php?action=logout" class="btn">Déconnexion</a>
                 </nav>
                       <?php else: ?>
-                <a href="index.php?action=create-trajet" class="btn">Créer un trajet</a>
+                <a href="index.php?action=creer" class="btn">Créer un trajet</a>
                 <span class="user-name">Bonjour <?= htmlspecialchars($_SESSION['user']['prenom']) ?> <?= htmlspecialchars($_SESSION['user']['nom']) ?></span>
                 <a href="index.php?action=logout" class="btn">Déconnexion</a
                 
