@@ -57,6 +57,18 @@ switch ($action) {
         $controller->updatePassword();
         break;
 
+
+        case 'modifier':
+    require 'views/trajets/modification-trajet.php';
+    break;
+
+case 'updateTrajet':
+    $trajetModel = new Trajet();
+    $trajetModel->updateTrajet($_GET['id_trajet'], $_POST);
+    $_SESSION['success'] = "Trajet modifié avec succès.";
+    header('Location: index.php?action=listTrajets');
+    exit;
+
     default:
         echo "Action inconnue.";
         break;

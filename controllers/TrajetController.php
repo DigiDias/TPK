@@ -23,4 +23,14 @@ class TrajetController {
         // affiche la vue en passant les données
         require __DIR__ . '/../views/trajets/liste.php';
     }
+
+    /**
+     * Méthode pour afficher le formulaire de création d'un trajet.
+     *
+     * @return void
+     */
+    public function creer() {
+        // affiche la vue de création de trajet
+        require __DIR__ . '/../views/trajets/CreerTrajet.php';
+    }
 }

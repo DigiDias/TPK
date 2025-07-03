@@ -8,10 +8,14 @@ if (session_status() === PHP_SESSION_NONE) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des trajets</title>
+    <title>Trajets proposés</title>
     <!-- CSS personnalisé + Bootstrap -->
     <link rel="stylesheet" href="public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+
 </head>
 
 <!-- Flex column pour que le footer reste en bas -->
@@ -23,7 +27,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Contenu principal -->
     <main class="container my-5 flex-grow-1">
 
-        <h1 class="mb-4">Liste des trajets</h1>
 
         <!-- Message de succès -->
 <?php if (!empty($_SESSION['error'])): ?>
@@ -40,28 +43,78 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php unset($_SESSION['success']); ?>
 <?php endif; ?>
 
+
+        <h1 class="mb-4">Trajets proposés</h1>
+
+
+
         <!-- Tableau des trajets -->
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
                     <th>Départ</th>
-                    <th>Arrivée</th>
-                    <th>Date départ</th>
-                    <th>Date arrivée</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                     <th>Destination</th>
+                    <th>Date</th>
+                    <th>Heure</th>
                     <th>Places dispo</th>
-                    <th>Contact</th>
+                    <th>email</th>
+                  
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($trajets as $trajet): ?>
                     <tr>
+
+<!-- Modal Voir -->
+<div class="modal fade" id="modalVoir<?= $trajet['id_trajet'] ?>" tabindex="-1" aria-labelledby="modalLabel<?= $trajet['id_trajet'] ?>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel<?= $trajet['id_trajet'] ?>">Détails du trajet</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Créateur :</strong> <?= htmlspecialchars($trajet['createur_nom'] ?? 'N/A') ?></p>
+        <p><strong>Email :</strong> <?= htmlspecialchars($trajet['contact_email']) ?></p>
+        <p><strong>Téléphone :</strong> <?= htmlspecialchars($trajet['contact_tel']) ?></p>
+        <p><strong>Places disponibles :</strong> <?= htmlspecialchars($trajet['places_dispo']) ?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
                         <td><?= htmlspecialchars($trajet['agence_depart']) ?></td>
-                        <td><?= htmlspecialchars($trajet['agence_arrivee']) ?></td>
                         <td><?= htmlspecialchars($trajet['date_depart']) ?></td>
+                        <td><?= htmlspecialchars($trajet['heure_depart']) ?></td>
+                        <td><?= htmlspecialchars($trajet['agence_arrivee']) ?></td>
+                        
                         <td><?= htmlspecialchars($trajet['date_arrivee']) ?></td>
+                        <td><?= htmlspecialchars($trajet['heure_arrivee']) ?></td>
                         <td><?= htmlspecialchars($trajet['places_dispo']) ?></td>
                         <td><?= htmlspecialchars($trajet['contact_email']) ?></td>
+                        <td>
+    <!-- Bouton Voir (toujours visible) -->
+    <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVoir<?= $trajet['id_trajet'] ?>">
+        <i class="bi bi-eye"></i>
+    </button>
+
+    <!-- Boutons Modifier et Supprimer (uniquement pour le créateur) -->
+    <?php if (isset($_SESSION['user']) && $_SESSION['user']['id'] == $trajet['id_createur']): ?>
+       <a href="index.php?action=modifier&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-warning">
+    <i class="bi bi-pencil"></i>
+</a>
+        <a href="index.php?action=supprimer&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce trajet ?');">
+            <i class="bi bi-trash"></i>
+        </a>
+    <?php endif; ?>
+</td>
+                        
                         <td>
                             <a href="index.php?action=participer&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-primary">
                                 Participer
@@ -77,7 +130,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Pied de page -->
     <?php include __DIR__ . '/../partials/footer.php'; ?>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+ 
 </body>
 </html>

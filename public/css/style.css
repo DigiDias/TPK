@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #385050;
+  background-color: #384050;
   color: white;
 }
 .tpk-header .logo {
@@ -23,7 +23,7 @@
   transition: background-color 0.3s ease;
 }
 .tpk-header .btn:hover {
-  background-color: #1976d2;
+  background-color: #0074c7;
 }
 .tpk-header .admin-nav a {
   margin-left: 1rem;
@@ -46,13 +46,6 @@ footer p {
   font-size: 0.65rem;
   margin: 0;
   color: #384050;
-}
-footer a {
-  color: #0074c7;
-  text-decoration: none;
-}
-footer a:hover {
-  text-decoration: underline;
 }
 
 body {
