@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../models/User.php';
+namespace Controllers;
+
+use Models\User;
+
 
 /**
  * Contrôleur gérant les opérations liées aux utilisateurs.

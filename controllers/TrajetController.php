@@ -1,7 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../models/Trajet.php';
-require_once __DIR__ . '/../models/Agence.php';
+
+namespace Controllers;
+
+use Models\Trajet;
+use Models\Agence;
 
 /**
  * Contrôleur chargé de gérer les trajets (liste, création, modification...).
@@ -133,4 +136,28 @@ class TrajetController {
     header("Location: index.php?action=listTrajets");
     exit;
 }
+
+
+public function supprimer(int $id_trajet): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $trajetModel = new Trajet();
+
+    $trajet = $trajetModel->getById($id_trajet);
+
+    if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
+        $_SESSION['error'] = "Suppression non autorisée.";
+        header("Location: index.php?action=listTrajets");
+        exit;
+    }
+
+    $trajetModel->delete($id_trajet);
+    $_SESSION['success'] = "Trajet supprimé avec succès.";
+    header("Location: index.php?action=listTrajets");
+    exit;
+}
+
 }

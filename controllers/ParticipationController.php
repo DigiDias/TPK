@@ -1,6 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../models/Participation.php';
+
+namespace Controllers;
+Use Models\Participation;
+use PDO;
+
 
 /**
  * Contrôleur ParticipationController

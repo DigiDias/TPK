@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+use Config\Database;
+use PDO;
+
 /**
  * Modèle Participation
  * Gère les interactions avec la table `participations`

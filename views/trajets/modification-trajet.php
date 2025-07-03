@@ -3,15 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../../models/Trajet.php';
-require_once __DIR__ . '/../../models/Agence.php';
-
-$trajetModel = new Trajet();
-$agenceModel = new Agence();
-
-$trajet = $trajetModel->getById($_GET['id_trajet']);
-$agences = $agenceModel->getAll();
-
+// $trajet et $agences sont fournis par le contrôleur
 if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
     die('Accès non autorisé.');
 }
@@ -22,13 +14,12 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
 <head>
     <meta charset="UTF-8">
     <title>Modifier le trajet</title>
-     <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container my-5">
-
     <h1 class="text-center mb-4 fond">Modifier le trajet</h1>
 
     <?php if (!empty($_SESSION['error'])): ?>
@@ -93,7 +84,7 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
 
         <div class="mb-3">
             <label for="places_dispo" class="form-label">Places disponibles</label>
-            <input type="number" name="places_dispo" id="places_dispo" class="form-control" value="<?= $trajet['places_dispo'] ?>" min="1" required>
+            <input type="number" name="places_dispo" id="places_dispo" class="form-control" value="<?= $trajet['places_dispo'] ?>"  required>
         </div>
 
         <div class="d-flex justify-content-between">

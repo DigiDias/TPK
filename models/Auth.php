@@ -1,6 +1,8 @@
 <?php
+namespace Models;
+use Config\Database;
 
-require_once __DIR__ . '/../config/database.php';
+use PDO;
 
 /**
  * Classe Auth

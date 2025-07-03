@@ -72,7 +72,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <th>Date</th>
                     <th>Heure</th>
                     <th>Places dispo</th>
-                
+                   
                                        <?php if (isset($_SESSION['user'])): ?>
                         <th>Action</th>
                     <?php endif; ?>

@@ -1,14 +1,23 @@
 {
-    "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "twbs/bootstrap": "*"
-    },
-    "require-dev": {
-        "phpdocumentor/phpdocumentor": "*",
-        "phpunit/phpunit": "*"
-    },
-
-    "scripts": {
+  "name": "mon-projet/tpk",
+  "description": "Application de gestion de trajets",
+  "type": "project",
+  "require": {
+    "vlucas/phpdotenv": "^5.6",
+    "twbs/bootstrap": "*"
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "*",
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Config\\": "config/",
+      "Models\\": "models/",
+      "Controllers\\": "controllers/"
+    }
+  },
+  "scripts": {
     "serve": "php -S localhost:8000"
-}
+  }
 }

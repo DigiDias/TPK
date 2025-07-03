@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../models/Auth.php';
+namespace Controllers;
+use Models\Auth;
 
 /**
  * Contrôleur gérant les opérations d'authentification.

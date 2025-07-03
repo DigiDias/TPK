@@ -1,7 +1,9 @@
 <?php
 // config/database.php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+namespace Config;
+
+use PDO;
 
 use Dotenv\Dotenv;
 

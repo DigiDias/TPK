@@ -31,7 +31,9 @@ return array(
     'dc39f6e3574dbe007bf5257cefb47de2' => $vendorDir . '/parsica-php/parsica/src/strings.php',
     '1573166c90cc6845fe3af0c5d696dd47' => $vendorDir . '/parsica-php/parsica/src/Expression/expression.php',
     '19db2fddbdac45468003bc044f3896dd' => $vendorDir . '/parsica-php/parsica/src/Internal/FP.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'f676b98f38a402a86808bdc0d7751f5c' => $vendorDir . '/phpdocumentor/reflection/src/php-parser/Modifiers.php',
     '2324d0e5cadd603331d27de142371f0b' => $vendorDir . '/symfony/contracts/Deprecation/function.php',
     'f598d06aa772fa33d905e87be6398fb1' => $vendorDir . '/symfony/polyfill-intl-idn/bootstrap.php',
+    'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
 );
