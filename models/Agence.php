@@ -5,10 +5,25 @@ namespace Models;
 use Config\Database;
 use PDO;
 
+/**
+ * Classe Agence
+ * 
+ * Gère les opérations CRUD liées aux agences dans la base de données.
+ */
 class Agence
 {
+    /**
+     * Instance PDO pour la connexion à la base de données.
+     *
+     * @var PDO
+     */
     private PDO $db;
 
+    /**
+     * Constructeur
+     * 
+     * Initialise la connexion à la base de données via la classe Database.
+     */
     public function __construct()
     {
         $database = new Database();
@@ -16,7 +31,9 @@ class Agence
     }
 
     /**
-     * Retourne toutes les agences
+     * Récupère toutes les agences de la base.
+     *
+     * @return array Liste des agences sous forme de tableau associatif.
      */
     public function getAll(): array
     {
@@ -26,7 +43,10 @@ class Agence
     }
 
     /**
-     * Récupère une agence par son ID
+     * Récupère une agence spécifique par son ID.
+     *
+     * @param int $id L'identifiant de l'agence.
+     * @return array|null Les données de l'agence ou null si introuvable.
      */
     public function getById(int $id): ?array
     {
@@ -37,7 +57,10 @@ class Agence
     }
 
     /**
-     * Crée une nouvelle agence
+     * Crée une nouvelle agence dans la base de données.
+     *
+     * @param string $nom Le nom de l'agence à ajouter.
+     * @return bool Vrai si l'insertion a réussi, faux sinon.
      */
     public function create(string $nom): bool
     {
@@ -47,7 +70,11 @@ class Agence
     }
 
     /**
-     * Met à jour une agence
+     * Met à jour les informations d'une agence existante.
+     *
+     * @param int $id L'identifiant de l'agence.
+     * @param string $nom Le nouveau nom de l'agence.
+     * @return bool Vrai si la mise à jour a réussi, faux sinon.
      */
     public function update(int $id, string $nom): bool
     {
@@ -57,7 +84,10 @@ class Agence
     }
 
     /**
-     * Supprime une agence
+     * Supprime une agence de la base de données.
+     *
+     * @param int $id L'identifiant de l'agence à supprimer.
+     * @return bool Vrai si la suppression a réussi, faux sinon.
      */
     public function delete(int $id): bool
     {

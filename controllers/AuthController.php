@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+
 use Models\Auth;
 
 /**
@@ -10,8 +11,14 @@ class AuthController
 {
     /**
      * Gère la connexion de l'utilisateur.
-     * Si la méthode est POST, vérifie les identifiants et démarre la session.
-     * Sinon, affiche le formulaire de connexion.
+     *
+     * - Si la méthode est POST :
+     *   - Récupère les identifiants.
+     *   - Vérifie leur validité via le modèle `Auth`.
+     *   - Si valides, initialise la session et stocke les infos utilisateur.
+     *   - Redirige vers la page des trajets.
+     * - Sinon :
+     *   - Affiche le formulaire de connexion.
      *
      * @return void
      */

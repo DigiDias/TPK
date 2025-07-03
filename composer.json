@@ -1,5 +1,5 @@
 {
-  "name": "mon-projet/tpk",
+  "name": "tpk/touche-pas-au-klaxon",
   "description": "Application de gestion de trajets",
   "type": "project",
   "require": {

@@ -62,8 +62,8 @@ class Trajet
     /**
      * Crée un nouveau trajet dans la base de données.
      *
-     * @param array $data
-     * @return bool
+     * @param array $data Données du trajet (agences, dates, horaires, etc.)
+     * @return bool Retourne vrai si l'insertion est réussie.
      */
     public function creerTrajet(array $data): bool
     {
@@ -108,10 +108,10 @@ class Trajet
     }
 
     /**
-     * Récupère un trajet par son ID.
+     * Récupère un trajet par son identifiant.
      *
-     * @param int $id
-     * @return array|null
+     * @param int $id Identifiant du trajet.
+     * @return array|null Données du trajet ou null s'il n'existe pas.
      */
     public function getById(int $id): ?array
     {
@@ -123,11 +123,11 @@ class Trajet
     }
 
     /**
-     * Met à jour un trajet existant.
+     * Met à jour les données d’un trajet existant.
      *
-     * @param int $id
-     * @param array $data
-     * @return bool
+     * @param int $id Identifiant du trajet à mettre à jour.
+     * @param array $data Nouvelles données à enregistrer.
+     * @return bool Vrai si la mise à jour est réussie.
      */
     public function updateTrajet(int $id, array $data): bool
     {
@@ -155,13 +155,16 @@ class Trajet
         ]);
     }
 
-    
-        public function delete(int $id): bool
-{
-    $sql = "DELETE FROM trajets WHERE id_trajet = :id";
-    $stmt = $this->db->prepare($sql);
-    return $stmt->execute([':id' => $id]);
-}
-  
-    
+    /**
+     * Supprime un trajet par son identifiant.
+     *
+     * @param int $id Identifiant du trajet à supprimer.
+     * @return bool Vrai si la suppression a réussi.
+     */
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM trajets WHERE id_trajet = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':id' => $id]);
+    }
 }

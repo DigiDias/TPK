@@ -1,14 +1,14 @@
 <?php
+
 namespace Controllers;
 
 use Models\User;
 
-
 /**
  * Contrôleur gérant les opérations liées aux utilisateurs.
  */
-class UserController {
-
+class UserController
+{
     /**
      * Met à jour le mot de passe d'un utilisateur via une requête POST (JSON).
      *
@@ -24,7 +24,8 @@ class UserController {
      *
      * @return void
      */
-    public function updatePassword() {
+    public function updatePassword(): void
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
             $email = $data['email'] ?? null;
@@ -51,18 +52,26 @@ class UserController {
         }
     }
 
+    /**
+     * Affiche la liste de tous les utilisateurs.
+     *
+     * Cette méthode est accessible uniquement via une requête GET.
+     * Les données sont récupérées depuis le modèle User et envoyées à la vue `list-users.php`.
+     *
+     * @return void
+     */
     public function AllUsers(): void
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $userModel = new \Models\User();
-        $users = $userModel->getAllUser();
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $userModel = new User();
+            $users = $userModel->getAllUser();
 
-        // Chargement de la vue avec les données utilisateurs
-        require __DIR__ . '/../views/users/list-users.php';
-    } else {
-        // Requête non autorisée
-        http_response_code(405);
-        echo "Méthode non autorisée.";
+            // Chargement de la vue avec les données utilisateurs
+            require __DIR__ . '/../views/users/list-users.php';
+        } else {
+            // Requête non autorisée
+            http_response_code(405);
+            echo "Méthode non autorisée.";
+        }
     }
-}
 }

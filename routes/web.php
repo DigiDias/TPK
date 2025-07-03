@@ -1,17 +1,26 @@
 <?php
 
+/**
+ * Routeur principal de l'application.
+ *
+ * Ce fichier analyse le paramètre `action` passé via l'URL
+ * et délègue la logique correspondante au bon contrôleur.
+ */
+
 // Import des contrôleurs
 use Controllers\TrajetController;
 use Controllers\ParticipationController;
 use Controllers\UserController;
 use Controllers\AuthController;
-use Controllers\AgenceController; // ✅ Important pour éviter l'erreur "Class not found"
+use Controllers\AgenceController; // Gestion des agences
 
-// Détermination de l'action demandée
+// Détermination de l'action demandée via l'URL (GET)
 $action = $_GET['action'] ?? 'listTrajets';
 
-// Routeur principal
+// Logique de routage en fonction de l'action
 switch ($action) {
+
+    // Authentification
     case 'login':
         (new AuthController())->login();
         break;
@@ -21,16 +30,9 @@ switch ($action) {
         header('Location: index.php?action=listTrajets');
         exit;
 
+    // Trajets
     case 'listTrajets':
         (new TrajetController())->liste();
-        break;
-
-    case 'ListUsers':
-        (new UserController())->AllUsers();
-        break;
-
-    case 'List-agences': // ✅ Le nom est OK si tu accèdes avec ?action=List-agences
-        (new AgenceController())->allAgences();
         break;
 
     case 'creer':
@@ -57,6 +59,24 @@ switch ($action) {
         }
         break;
 
+    case 'supprimer':
+        if (isset($_GET['id_trajet'])) {
+            (new TrajetController())->supprimer((int)$_GET['id_trajet']);
+        } else {
+            echo "ID de trajet manquant.";
+        }
+        break;
+
+    // Utilisateurs
+    case 'ListUsers':
+        (new UserController())->AllUsers();
+        break;
+
+    case 'update_password':
+        (new UserController())->updatePassword();
+        break;
+
+    // Participations
     case 'participer':
         if (isset($_GET['id_trajet'])) {
             (new ParticipationController($pdo))->form((int)$_GET['id_trajet']);
@@ -69,30 +89,24 @@ switch ($action) {
         (new ParticipationController($pdo))->store();
         break;
 
-    case 'update_password':
-        (new UserController())->updatePassword();
+    // Agences
+    case 'List-agences':
+        (new AgenceController())->allAgences();
         break;
 
-    case 'supprimer':
-        if (isset($_GET['id_trajet'])) {
-            (new TrajetController())->supprimer((int)$_GET['id_trajet']);
-        } else {
-            echo "ID de trajet manquant.";
-        }
+    case 'creerAgence':
+        (new AgenceController())->creer();
         break;
 
-     case 'creerAgence':
-    (new AgenceController())->creer();
-    break;
+    case 'modifierAgence':
+        (new AgenceController())->modifier((int)$_GET['id_agence']);
+        break;
 
-case 'modifierAgence':
-    (new AgenceController())->modifier((int)$_GET['id_agence']);
-    break;
+    case 'supprimerAgence':
+        (new AgenceController())->supprimer((int)$_GET['id_agence']);
+        break;
 
-case 'supprimerAgence':
-    (new AgenceController())->supprimer((int)$_GET['id_agence']);
-    break;   
-
+    // Action inconnue
     default:
         echo "Action inconnue.";
         break;

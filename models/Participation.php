@@ -1,37 +1,45 @@
 <?php
 
 namespace Models;
+
 use Config\Database;
 use PDO;
 
 /**
- * Modèle Participation
- * Gère les interactions avec la table `participations`
+ * Classe Participation
+ *
+ * Gère les interactions avec la table `participations`.
  */
-class Participation {
-
+class Participation
+{
     /**
-     * @var PDO Connexion PDO à la base
+     * Instance PDO pour la connexion à la base de données.
+     *
+     * @var PDO
      */
     private PDO $db;
 
     /**
-     * Constructeur avec injection PDO
+     * Constructeur
      *
-     * @param PDO $pdo Connexion à la base de données
+     * Initialise la connexion avec une instance de PDO.
+     *
+     * @param PDO $pdo Instance PDO injectée.
      */
-    public function __construct(PDO $pdo) {
+    public function __construct(PDO $pdo)
+    {
         $this->db = $pdo;
     }
 
     /**
-     * Enregistre une nouvelle participation
+     * Enregistre une nouvelle participation à un trajet.
      *
-     * @param int $id_user Identifiant de l'utilisateur
-     * @param int $id_trajet Identifiant du trajet
-     * @return bool True si succès, false sinon
+     * @param int $id_user   ID de l'utilisateur qui participe.
+     * @param int $id_trajet ID du trajet auquel participer.
+     * @return bool          True si insertion réussie, false sinon.
      */
-    public function ajouterParticipation(int $id_user, int $id_trajet): bool {
+    public function ajouterParticipation(int $id_user, int $id_trajet): bool
+    {
         $sql = "INSERT INTO participations (id_user, id_trajet, date_inscription)
                 VALUES (:id_user, :id_trajet, NOW())";
 
@@ -43,11 +51,12 @@ class Participation {
     }
 
     /**
-     * Récupère toutes les participations
+     * Récupère toutes les participations enregistrées.
      *
-     * @return array
+     * @return array Tableau associatif des participations.
      */
-    public function getAll(): array {
+    public function getAll(): array
+    {
         $sql = "SELECT * FROM participations";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
