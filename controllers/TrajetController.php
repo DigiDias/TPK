@@ -59,14 +59,16 @@ class TrajetController {
         $dateArrivee = $_POST['date_arrivee'];
         $today       = date('Y-m-d');
 
-        // Règles métier
-        if ($depart === $arrivee) {
-            $_SESSION['error'] = "L'agence de départ ne peut pas être la même que l'agence d'arrivée.";
-        } elseif ($dateDepart < $today) {
-            $_SESSION['error'] = "La date de départ ne peut pas être antérieure à aujourd'hui.";
-        } elseif ($dateDepart > $dateArrivee) {
-            $_SESSION['error'] = "La date de départ ne peut pas être supérieure à la date d'arrivée.";
-        }
+     // Règles métier
+if ($depart === $arrivee) {
+    $_SESSION['error'] = "L'agence de départ ne peut pas être la même que l'agence d'arrivée.";
+} elseif ($dateDepart < $today) {
+    $_SESSION['error'] = "La date de départ ne peut pas être antérieure à aujourd'hui.";
+} elseif ($dateDepart > $dateArrivee) {
+    $_SESSION['error'] = "La date de départ ne peut pas être supérieure à la date d'arrivée.";
+} elseif ($dateDepart === $dateArrivee && $_POST['heure_arrivee'] <= $_POST['heure_depart']) {
+    $_SESSION['error'] = "L'heure d'arrivée doit être supérieure à l'heure de départ si les dates sont identiques.";
+}
 
         if (!empty($_SESSION['error'])) {
             header("Location: index.php?action=modifier&id_trajet=" . $id_trajet);
