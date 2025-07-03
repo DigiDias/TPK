@@ -3,25 +3,26 @@
  * Routeur principal
  * Initialise la session, charge la connexion à la BDD et redirige selon l’action
  */
-// Redirection immédiate vers liste.php
-//header('Location: liste.php');
-//exit;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Connexion DB
 require_once 'config/database.php';
 $database = new Database();
 $pdo = $database->getConnection();
 
+// Contrôleurs
 require_once 'controllers/TrajetController.php';
 require_once 'controllers/ParticipationController.php';
 require_once 'controllers/UserController.php';
 require_once 'controllers/AuthController.php';
 
+// Action demandée
 $action = $_GET['action'] ?? 'listTrajets';
 
+// Route
 switch ($action) {
     case 'login':
         $controller = new AuthController();
@@ -36,6 +37,29 @@ switch ($action) {
     case 'listTrajets':
         $controller = new TrajetController();
         $controller->liste();
+        break;
+
+    case 'creer':
+        $controller = new TrajetController();
+        $controller->creer();
+        break;
+
+    case 'modifier':
+        if (isset($_GET['id_trajet'])) {
+            $controller = new TrajetController();
+            $controller->modifier((int)$_GET['id_trajet']);
+        } else {
+            echo "ID de trajet manquant.";
+        }
+        break;
+
+    case 'updateTrajet':
+        if (isset($_GET['id_trajet'])) {
+            $controller = new TrajetController();
+            $controller->update((int)$_GET['id_trajet']);
+        } else {
+            echo "ID de trajet manquant.";
+        }
         break;
 
     case 'participer':
@@ -56,18 +80,6 @@ switch ($action) {
         $controller = new UserController();
         $controller->updatePassword();
         break;
-
-
-        case 'modifier':
-    require 'views/trajets/modification-trajet.php';
-    break;
-
-case 'updateTrajet':
-    $trajetModel = new Trajet();
-    $trajetModel->updateTrajet($_GET['id_trajet'], $_POST);
-    $_SESSION['success'] = "Trajet modifié avec succès.";
-    header('Location: index.php?action=listTrajets');
-    exit;
 
     default:
         echo "Action inconnue.";

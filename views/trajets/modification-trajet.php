@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
 
 require_once __DIR__ . '/../../models/Trajet.php';
 require_once __DIR__ . '/../../models/Agence.php';
@@ -25,6 +23,20 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container my-5">
+
+<?php if (!empty($_SESSION['error'])): ?>
+    <div class="alert alert-danger text-center">
+        <?= htmlspecialchars($_SESSION['error']) ?>
+        <?php unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION['success'])): ?>
+    <div class="alert alert-success text-center">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+        <?php unset($_SESSION['success']); ?>
+    </div>
+<?php endif; ?>
 
     <h1 class="mb-4">Modifier le trajet</h1>
 
@@ -78,6 +90,16 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
             <div class="col-sm-3">
                 <input type="time" name="heure_arrivee" class="form-control" value="<?= $trajet['heure_arrivee'] ?>">
             </div>
+        </div>
+
+
+              <!-- Nbe de Places Disponibles -->
+        <div class="mb-3 row">
+            <label class="col-sm-3 col-form-label">Nbe de Places Disponible</label>
+            <div class="col-sm-3">
+                <input type="text" name="places_dispo" class="form-control" value="<?= $trajet['places_dispo'] ?>">
+            </div>
+         
         </div>
 
         <div class="mb-3">

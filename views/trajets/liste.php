@@ -60,7 +60,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     <th>Heure</th>
                     <th>Places dispo</th>
                     <th>email</th>
-                  
                     <th>Action</th>
                 </tr>
             </thead>
@@ -115,11 +114,11 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php endif; ?>
 </td>
                         
-                        <td>
+                        <!-- <td>
                             <a href="index.php?action=participer&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-primary">
                                 Participer
                             </a>
-                        </td>
+                        </td> -->
                     </tr>
                 <?php endforeach; ?>
             </tbody>

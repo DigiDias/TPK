@@ -107,15 +107,15 @@ public function form(int $id_trajet): void
         }
 
         // Insère la participation
-        $participationModel = new Participation($this->pdo);
-        $participationModel->ajouterParticipation($idUtilisateur, $idTrajet);
+       // $participationModel = new Participation($this->pdo);
+        //$participationModel->ajouterParticipation($idUtilisateur, $idTrajet);
 
         // Met à jour les places disponibles
-        $update = $this->pdo->prepare("UPDATE trajets SET places_dispo = places_dispo - 1 WHERE id_trajet = ?");
-        $update->execute([$idTrajet]);
+       // $update = $this->pdo->prepare("UPDATE trajets SET places_dispo = places_dispo - 1 WHERE id_trajet = ?");
+        //$update->execute([$idTrajet]);
 
-        $_SESSION['success'] = "Participation enregistrée avec succès.";
-        header("Location: index.php?action=listTrajets");
-        exit;
+        //$_SESSION['success'] = "Participation enregistrée avec succès.";
+       // header("Location: index.php?action=listTrajets");
+       // exit;
     }
 }

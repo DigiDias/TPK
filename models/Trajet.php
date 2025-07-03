@@ -135,7 +135,8 @@ public function updateTrajet(int $id, array $data): bool
                 date_depart = :date_depart,
                 heure_depart = :heure_depart,
                 date_arrivee = :date_arrivee,
-                heure_arrivee = :heure_arrivee
+                heure_arrivee = :heure_arrivee,
+                places_dispo= :places_dispo
             WHERE id_trajet = :id";
 
     $stmt = $this->db->prepare($sql);
@@ -147,6 +148,7 @@ public function updateTrajet(int $id, array $data): bool
         ':heure_depart'  => $data['heure_depart'],
         ':date_arrivee'  => $data['date_arrivee'],
         ':heure_arrivee' => $data['heure_arrivee'],
+        ':places_dispo' => $data['places_dispo'],
         ':id'            => $id
     ]);
 }

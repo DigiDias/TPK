@@ -1,36 +1,82 @@
 <?php
 
 require_once __DIR__ . '/../models/Trajet.php';
+require_once __DIR__ . '/../models/Agence.php';
 
 /**
- * Classe TrajetController
- * 
- * Contrôleur chargé de gérer l'affichage des trajets.
+ * Contrôleur chargé de gérer les trajets (liste, création, modification...).
  */
 class TrajetController {
 
     /**
-     * Méthode principale pour afficher la liste des trajets.
-     *
-     * Récupère les trajets via le modèle et charge la vue associée.
-     *
-     * @return void
+     * Affiche la liste des trajets.
      */
-    public function liste() {
-        $trajetModel = new Trajet(); // instancie le modèle
-        $trajets = $trajetModel->getAll(); // récupère les trajets
-
-        // affiche la vue en passant les données
+    public function liste(): void {
+        $trajetModel = new Trajet();
+        $trajets = $trajetModel->getAll();
         require __DIR__ . '/../views/trajets/liste.php';
     }
 
     /**
-     * Méthode pour afficher le formulaire de création d'un trajet.
-     *
-     * @return void
+     * Affiche le formulaire de création de trajet.
      */
-    public function creer() {
-        // affiche la vue de création de trajet
+    public function creer(): void {
         require __DIR__ . '/../views/trajets/CreerTrajet.php';
+    }
+
+    /**
+     * Affiche le formulaire de modification d’un trajet.
+     *
+     * @param int $id_trajet
+     */
+    public function modifier(int $id_trajet): void {
+    
+
+        $trajetModel = new Trajet();
+        $agenceModel = new Agence();
+
+        $trajet = $trajetModel->getById($id_trajet);
+        $agences = $agenceModel->getAll();
+
+        if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
+            die('Accès non autorisé.');
+        }
+
+        require __DIR__ . '/../views/trajets/modification-trajet.php';
+    }
+
+    /**
+     * Met à jour un trajet après validation.
+     *
+     * @param int $id_trajet
+     */
+    public function update(int $id_trajet): void {
+        session_start();
+
+        $depart      = $_POST['agence_depart_id'];
+        $arrivee     = $_POST['agence_arrivee_id'];
+        $dateDepart  = $_POST['date_depart'];
+        $dateArrivee = $_POST['date_arrivee'];
+        $today       = date('Y-m-d');
+
+        // Règles métier
+        if ($depart === $arrivee) {
+            $_SESSION['error'] = "L'agence de départ ne peut pas être la même que l'agence d'arrivée.";
+        } elseif ($dateDepart < $today) {
+            $_SESSION['error'] = "La date de départ ne peut pas être antérieure à aujourd'hui.";
+        } elseif ($dateDepart > $dateArrivee) {
+            $_SESSION['error'] = "La date de départ ne peut pas être supérieure à la date d'arrivée.";
+        }
+
+        if (!empty($_SESSION['error'])) {
+            header("Location: index.php?action=modifier&id_trajet=" . $id_trajet);
+            exit;
+        }
+
+        $trajetModel = new Trajet();
+        $trajetModel->updateTrajet($id_trajet, $_POST);
+        $_SESSION['success'] = "Trajet modifié avec succès.";
+        header('Location: index.php?action=listTrajets');
+        exit;
     }
 }
