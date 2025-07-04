@@ -13,11 +13,12 @@ use Controllers\ParticipationController;
 use Controllers\UserController;
 use Controllers\AuthController;
 use Controllers\AgenceController; // Gestion des agences
+use Config\Database; // Pour initialiser PDO si besoin
 
 // Détermination de l'action demandée via l'URL (GET)
 $action = $_GET['action'] ?? 'listTrajets';
 
-// Logique de routage en fonction de l'action
+// Logique de routage
 switch ($action) {
 
     // Authentification
@@ -79,6 +80,7 @@ switch ($action) {
     // Participations
     case 'participer':
         if (isset($_GET['id_trajet'])) {
+            $pdo = (new Database())->getConnection();
             (new ParticipationController($pdo))->form((int)$_GET['id_trajet']);
         } else {
             echo "ID de trajet manquant.";
@@ -86,6 +88,7 @@ switch ($action) {
         break;
 
     case 'store-participation':
+        $pdo = (new Database())->getConnection();
         (new ParticipationController($pdo))->store();
         break;
 

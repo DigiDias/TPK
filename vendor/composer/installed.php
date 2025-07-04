@@ -3,7 +3,7 @@
         'name' => 'tpk/touche-pas-au-klaxon',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '7a50e67a21ddd1635c4ab0c4b6b111173885c45d',
+        'reference' => 'ce51b7cf8f151aae15077975c52410777211e79a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -63,6 +63,15 @@
             'install_path' => __DIR__ . '/../phpoption/phpoption',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'phpstan/phpstan' => array(
+            'pretty_version' => '2.1.17',
+            'version' => '2.1.17.0',
+            'reference' => '89b5ef665716fa2a52ecd2633f21007a6a349053',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpstan/phpstan',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'phpunit/php-code-coverage' => array(
             'pretty_version' => '12.3.1',
@@ -283,7 +292,7 @@
         'tpk/touche-pas-au-klaxon' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7a50e67a21ddd1635c4ab0c4b6b111173885c45d',
+            'reference' => 'ce51b7cf8f151aae15077975c52410777211e79a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
