@@ -1,5 +1,5 @@
 # Utilise une image PHP avec Apache et Composer
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 # Active mod_rewrite
 RUN a2enmod rewrite
