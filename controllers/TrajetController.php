@@ -158,24 +158,31 @@ class TrajetController
      * @param int $id_trajet ID du trajet à supprimer
      * @return void
      */
-    public function supprimer(int $id_trajet): void
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+public function supprimer(int $id_trajet): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-        $trajetModel = new Trajet();
-        $trajet = $trajetModel->getById($id_trajet);
+    $trajetModel = new Trajet();
+    $trajet = $trajetModel->getById($id_trajet);
 
-        if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
-            $_SESSION['error'] = "Suppression non autorisée.";
-            header("Location: index.php?action=listTrajets");
-            exit;
-        }
-
-        $trajetModel->delete($id_trajet);
-        $_SESSION['success'] = "Trajet supprimé avec succès.";
+    // Vérifie si le trajet existe et si l'utilisateur est soit le créateur, soit un admin
+    if (
+        !$trajet ||
+        (
+            $_SESSION['user']['id'] != $trajet['id_createur'] &&
+            $_SESSION['user']['role'] !== 'admin'
+        )
+    ) {
+        $_SESSION['error'] = "Suppression non autorisée.";
         header("Location: index.php?action=listTrajets");
         exit;
     }
+
+    $trajetModel->delete($id_trajet);
+    $_SESSION['success'] = "Trajet supprimé avec succès.";
+    header("Location: index.php?action=listTrajets");
+    exit;
+}
 }
