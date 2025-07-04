@@ -18,6 +18,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <div class="container py-5">
     <h1 class="mb-4 fond text-center">Liste des utilisateurs</h1>
 
+ <!-- Utilisateur non vide -->
     <?php if (!empty($users)): ?>
         <table class="table table-bordered table-hover">
             <thead class=" fond" style >
