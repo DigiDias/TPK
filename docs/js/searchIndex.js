@@ -1,79 +1,324 @@
 Search.appendIndex(
     [
                 {
-            "fqsen": "\\Database",
+            "fqsen": "\\Config\\Database",
             "name": "Database",
             "summary": "Classe\u0020Database",
-            "url": "classes/Database.html"
+            "url": "classes/Config-Database.html"
         },                {
-            "fqsen": "\\Database\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\Config\\Database\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Constructeur",
-            "url": "classes/Database.html#method___construct"
+            "summary": "Constructeur\nInitialise\u0020les\u0020informations\u0020de\u0020connexion\u0020\u00E0\u0020partir\u0020du\u0020fichier\u0020.env",
+            "url": "classes/Config-Database.html#method___construct"
         },                {
-            "fqsen": "\\Database\u003A\u003AgetConnection\u0028\u0029",
+            "fqsen": "\\Config\\Database\u003A\u003AgetConnection\u0028\u0029",
             "name": "getConnection",
-            "summary": "\u00C9tablit\u0020une\u0020connexion\u0020PDO\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es",
-            "url": "classes/Database.html#method_getConnection"
+            "summary": "R\u00E9cup\u00E8re\u0020une\u0020instance\u0020PDO\u0020connect\u00E9e\u0020\u00E0\u0020la\u0020base",
+            "url": "classes/Config-Database.html#method_getConnection"
         },                {
-            "fqsen": "\\Database\u003A\u003A\u0024host",
+            "fqsen": "\\Config\\Database\u003A\u003A\u0024host",
             "name": "host",
             "summary": "",
-            "url": "classes/Database.html#property_host"
+            "url": "classes/Config-Database.html#property_host"
         },                {
-            "fqsen": "\\Database\u003A\u003A\u0024dbname",
+            "fqsen": "\\Config\\Database\u003A\u003A\u0024dbname",
             "name": "dbname",
             "summary": "",
-            "url": "classes/Database.html#property_dbname"
+            "url": "classes/Config-Database.html#property_dbname"
         },                {
-            "fqsen": "\\Database\u003A\u003A\u0024username",
+            "fqsen": "\\Config\\Database\u003A\u003A\u0024username",
             "name": "username",
             "summary": "",
-            "url": "classes/Database.html#property_username"
+            "url": "classes/Config-Database.html#property_username"
         },                {
-            "fqsen": "\\Database\u003A\u003A\u0024password",
+            "fqsen": "\\Config\\Database\u003A\u003A\u0024password",
             "name": "password",
             "summary": "",
-            "url": "classes/Database.html#property_password"
+            "url": "classes/Config-Database.html#property_password"
         },                {
-            "fqsen": "\\Database\u003A\u003A\u0024pdo",
+            "fqsen": "\\Config\\Database\u003A\u003A\u0024pdo",
             "name": "pdo",
             "summary": "",
-            "url": "classes/Database.html#property_pdo"
+            "url": "classes/Config-Database.html#property_pdo"
         },                {
-            "fqsen": "\\TrajetController",
+            "fqsen": "\\Controllers\\AgenceController",
+            "name": "AgenceController",
+            "summary": "Contr\u00F4leur\u0020g\u00E9rant\u0020les\u0020op\u00E9rations\u0020li\u00E9es\u0020aux\u0020agences.",
+            "url": "classes/Controllers-AgenceController.html"
+        },                {
+            "fqsen": "\\Controllers\\AgenceController\u003A\u003AallAgences\u0028\u0029",
+            "name": "allAgences",
+            "summary": "Affiche\u0020la\u0020liste\u0020de\u0020toutes\u0020les\u0020agences.",
+            "url": "classes/Controllers-AgenceController.html#method_allAgences"
+        },                {
+            "fqsen": "\\Controllers\\AgenceController\u003A\u003Acreer\u0028\u0029",
+            "name": "creer",
+            "summary": "Cr\u00E9e\u0020une\u0020nouvelle\u0020agence.",
+            "url": "classes/Controllers-AgenceController.html#method_creer"
+        },                {
+            "fqsen": "\\Controllers\\AgenceController\u003A\u003Amodifier\u0028\u0029",
+            "name": "modifier",
+            "summary": "Modifie\u0020une\u0020agence\u0020existante.",
+            "url": "classes/Controllers-AgenceController.html#method_modifier"
+        },                {
+            "fqsen": "\\Controllers\\AgenceController\u003A\u003Asupprimer\u0028\u0029",
+            "name": "supprimer",
+            "summary": "Supprime\u0020une\u0020agence.",
+            "url": "classes/Controllers-AgenceController.html#method_supprimer"
+        },                {
+            "fqsen": "\\Controllers\\AuthController",
+            "name": "AuthController",
+            "summary": "Contr\u00F4leur\u0020g\u00E9rant\u0020les\u0020op\u00E9rations\u0020d\u0027authentification.",
+            "url": "classes/Controllers-AuthController.html"
+        },                {
+            "fqsen": "\\Controllers\\AuthController\u003A\u003Alogin\u0028\u0029",
+            "name": "login",
+            "summary": "G\u00E8re\u0020la\u0020connexion\u0020de\u0020l\u0027utilisateur.",
+            "url": "classes/Controllers-AuthController.html#method_login"
+        },                {
+            "fqsen": "\\Controllers\\ParticipationController",
+            "name": "ParticipationController",
+            "summary": "Contr\u00F4leur\u0020ParticipationController\nG\u00E8re\u0020les\u0020inscriptions\u0020aux\u0020trajets",
+            "url": "classes/Controllers-ParticipationController.html"
+        },                {
+            "fqsen": "\\Controllers\\ParticipationController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructeur\u0020du\u0020contr\u00F4leur",
+            "url": "classes/Controllers-ParticipationController.html#method___construct"
+        },                {
+            "fqsen": "\\Controllers\\ParticipationController\u003A\u003Aform\u0028\u0029",
+            "name": "form",
+            "summary": "Affiche\u0020le\u0020formulaire\u0020de\u0020participation\u0020\u00E0\u0020un\u0020trajet",
+            "url": "classes/Controllers-ParticipationController.html#method_form"
+        },                {
+            "fqsen": "\\Controllers\\ParticipationController\u003A\u003Astore\u0028\u0029",
+            "name": "store",
+            "summary": "Enregistre\u0020la\u0020participation\u0020de\u0020l\u0027utilisateur\u0020au\u0020trajet\u0020s\u00E9lectionn\u00E9",
+            "url": "classes/Controllers-ParticipationController.html#method_store"
+        },                {
+            "fqsen": "\\Controllers\\ParticipationController\u003A\u003A\u0024pdo",
+            "name": "pdo",
+            "summary": "",
+            "url": "classes/Controllers-ParticipationController.html#property_pdo"
+        },                {
+            "fqsen": "\\Controllers\\TrajetController",
             "name": "TrajetController",
-            "summary": "Classe\u0020TrajetController",
-            "url": "classes/TrajetController.html"
+            "summary": "Contr\u00F4leur\u0020charg\u00E9\u0020de\u0020g\u00E9rer\u0020les\u0020trajets\u0020\u0028liste,\u0020cr\u00E9ation,\u0020modification,\u0020suppression\u0029.",
+            "url": "classes/Controllers-TrajetController.html"
         },                {
-            "fqsen": "\\TrajetController\u003A\u003Aliste\u0028\u0029",
+            "fqsen": "\\Controllers\\TrajetController\u003A\u003Aliste\u0028\u0029",
             "name": "liste",
-            "summary": "M\u00E9thode\u0020principale\u0020pour\u0020afficher\u0020la\u0020liste\u0020des\u0020trajets.",
-            "url": "classes/TrajetController.html#method_liste"
+            "summary": "Affiche\u0020la\u0020liste\u0020de\u0020tous\u0020les\u0020trajets\u0020\u00E0\u0020venir.",
+            "url": "classes/Controllers-TrajetController.html#method_liste"
         },                {
-            "fqsen": "\\Trajet",
-            "name": "Trajet",
-            "summary": "Classe\u0020Trajet",
-            "url": "classes/Trajet.html"
+            "fqsen": "\\Controllers\\TrajetController\u003A\u003Acreer\u0028\u0029",
+            "name": "creer",
+            "summary": "Affiche\u0020le\u0020formulaire\u0020de\u0020cr\u00E9ation\u0020d\u0027un\u0020nouveau\u0020trajet.",
+            "url": "classes/Controllers-TrajetController.html#method_creer"
         },                {
-            "fqsen": "\\Trajet\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\Controllers\\TrajetController\u003A\u003Amodifier\u0028\u0029",
+            "name": "modifier",
+            "summary": "Affiche\u0020le\u0020formulaire\u0020de\u0020modification\u0020d\u2019un\u0020trajet.",
+            "url": "classes/Controllers-TrajetController.html#method_modifier"
+        },                {
+            "fqsen": "\\Controllers\\TrajetController\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020les\u0020donn\u00E9es\u0020d\u2019un\u0020trajet\u0020apr\u00E8s\u0020modification.",
+            "url": "classes/Controllers-TrajetController.html#method_update"
+        },                {
+            "fqsen": "\\Controllers\\TrajetController\u003A\u003Astore\u0028\u0029",
+            "name": "store",
+            "summary": "Enregistre\u0020un\u0020nouveau\u0020trajet\u0020dans\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Controllers-TrajetController.html#method_store"
+        },                {
+            "fqsen": "\\Controllers\\TrajetController\u003A\u003Asupprimer\u0028\u0029",
+            "name": "supprimer",
+            "summary": "Supprime\u0020un\u0020trajet\u0020par\u0020son\u0020ID\u0020s\u0027il\u0020appartient\u0020au\u0020cr\u00E9ateur.",
+            "url": "classes/Controllers-TrajetController.html#method_supprimer"
+        },                {
+            "fqsen": "\\Controllers\\UserController",
+            "name": "UserController",
+            "summary": "Contr\u00F4leur\u0020g\u00E9rant\u0020les\u0020op\u00E9rations\u0020li\u00E9es\u0020aux\u0020utilisateurs.",
+            "url": "classes/Controllers-UserController.html"
+        },                {
+            "fqsen": "\\Controllers\\UserController\u003A\u003AupdatePassword\u0028\u0029",
+            "name": "updatePassword",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020le\u0020mot\u0020de\u0020passe\u0020d\u0027un\u0020utilisateur\u0020via\u0020une\u0020requ\u00EAte\u0020POST\u0020\u0028JSON\u0029.",
+            "url": "classes/Controllers-UserController.html#method_updatePassword"
+        },                {
+            "fqsen": "\\Controllers\\UserController\u003A\u003AAllUsers\u0028\u0029",
+            "name": "AllUsers",
+            "summary": "Affiche\u0020la\u0020liste\u0020de\u0020tous\u0020les\u0020utilisateurs.",
+            "url": "classes/Controllers-UserController.html#method_AllUsers"
+        },                {
+            "fqsen": "\\Models\\Agence",
+            "name": "Agence",
+            "summary": "Classe\u0020Agence",
+            "url": "classes/Models-Agence.html"
+        },                {
+            "fqsen": "\\Models\\Agence\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "Constructeur",
-            "url": "classes/Trajet.html#method___construct"
+            "url": "classes/Models-Agence.html#method___construct"
         },                {
-            "fqsen": "\\Trajet\u003A\u003AgetAll\u0028\u0029",
+            "fqsen": "\\Models\\Agence\u003A\u003AgetAll\u0028\u0029",
             "name": "getAll",
-            "summary": "R\u00E9cup\u00E8re\u0020tous\u0020les\u0020trajets\u0020avec\u0020le\u0020nom\u0020des\u0020agences\u0020de\u0020d\u00E9part\u0020et\u0020d\u0027arriv\u00E9e",
-            "url": "classes/Trajet.html#method_getAll"
+            "summary": "R\u00E9cup\u00E8re\u0020toutes\u0020les\u0020agences\u0020de\u0020la\u0020base.",
+            "url": "classes/Models-Agence.html#method_getAll"
         },                {
-            "fqsen": "\\Trajet\u003A\u003A\u0024db",
+            "fqsen": "\\Models\\Agence\u003A\u003AgetById\u0028\u0029",
+            "name": "getById",
+            "summary": "R\u00E9cup\u00E8re\u0020une\u0020agence\u0020sp\u00E9cifique\u0020par\u0020son\u0020ID.",
+            "url": "classes/Models-Agence.html#method_getById"
+        },                {
+            "fqsen": "\\Models\\Agence\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "Cr\u00E9e\u0020une\u0020nouvelle\u0020agence\u0020dans\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Agence.html#method_create"
+        },                {
+            "fqsen": "\\Models\\Agence\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020les\u0020informations\u0020d\u0027une\u0020agence\u0020existante.",
+            "url": "classes/Models-Agence.html#method_update"
+        },                {
+            "fqsen": "\\Models\\Agence\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Supprime\u0020une\u0020agence\u0020de\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Agence.html#method_delete"
+        },                {
+            "fqsen": "\\Models\\Agence\u003A\u003A\u0024db",
             "name": "db",
-            "summary": "Instance\u0020PDO\u0020pour\u0020la\u0020connexion\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es",
-            "url": "classes/Trajet.html#property_db"
+            "summary": "Instance\u0020PDO\u0020pour\u0020la\u0020connexion\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Agence.html#property_db"
+        },                {
+            "fqsen": "\\Models\\Auth",
+            "name": "Auth",
+            "summary": "Classe\u0020Auth\nG\u00E8re\u0020l\u0027authentification\u0020des\u0020utilisateurs.",
+            "url": "classes/Models-Auth.html"
+        },                {
+            "fqsen": "\\Models\\Auth\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructeur\u0020\u003A\u0020initialise\u0020la\u0020connexion\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Auth.html#method___construct"
+        },                {
+            "fqsen": "\\Models\\Auth\u003A\u003AverifyCredentials\u0028\u0029",
+            "name": "verifyCredentials",
+            "summary": "V\u00E9rifie\u0020les\u0020identifiants\u0020de\u0020l\u0027utilisateur.",
+            "url": "classes/Models-Auth.html#method_verifyCredentials"
+        },                {
+            "fqsen": "\\Models\\Auth\u003A\u003A\u0024db",
+            "name": "db",
+            "summary": "",
+            "url": "classes/Models-Auth.html#property_db"
+        },                {
+            "fqsen": "\\Models\\Participation",
+            "name": "Participation",
+            "summary": "Classe\u0020Participation",
+            "url": "classes/Models-Participation.html"
+        },                {
+            "fqsen": "\\Models\\Participation\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructeur",
+            "url": "classes/Models-Participation.html#method___construct"
+        },                {
+            "fqsen": "\\Models\\Participation\u003A\u003AajouterParticipation\u0028\u0029",
+            "name": "ajouterParticipation",
+            "summary": "Enregistre\u0020une\u0020nouvelle\u0020participation\u0020\u00E0\u0020un\u0020trajet.",
+            "url": "classes/Models-Participation.html#method_ajouterParticipation"
+        },                {
+            "fqsen": "\\Models\\Participation\u003A\u003AgetAll\u0028\u0029",
+            "name": "getAll",
+            "summary": "R\u00E9cup\u00E8re\u0020toutes\u0020les\u0020participations\u0020enregistr\u00E9es.",
+            "url": "classes/Models-Participation.html#method_getAll"
+        },                {
+            "fqsen": "\\Models\\Participation\u003A\u003A\u0024db",
+            "name": "db",
+            "summary": "Instance\u0020PDO\u0020pour\u0020la\u0020connexion\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Participation.html#property_db"
+        },                {
+            "fqsen": "\\Models\\Trajet",
+            "name": "Trajet",
+            "summary": "Classe\u0020Trajet",
+            "url": "classes/Models-Trajet.html"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructeur",
+            "url": "classes/Models-Trajet.html#method___construct"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003AgetAll\u0028\u0029",
+            "name": "getAll",
+            "summary": "R\u00E9cup\u00E8re\u0020tous\u0020les\u0020trajets\u0020\u00E0\u0020venir\u0020avec\u0020\u003A\n\u002D\u0020Le\u0020nom\u0020des\u0020agences\u0020de\u0020d\u00E9part\u0020et\u0020d\u0027arriv\u00E9e\n\u002D\u0020Le\u0020nom\u0020du\u0020cr\u00E9ateur\u0020du\u0020trajet",
+            "url": "classes/Models-Trajet.html#method_getAll"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003AcreerTrajet\u0028\u0029",
+            "name": "creerTrajet",
+            "summary": "Cr\u00E9e\u0020un\u0020nouveau\u0020trajet\u0020dans\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Trajet.html#method_creerTrajet"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003AgetById\u0028\u0029",
+            "name": "getById",
+            "summary": "R\u00E9cup\u00E8re\u0020un\u0020trajet\u0020par\u0020son\u0020identifiant.",
+            "url": "classes/Models-Trajet.html#method_getById"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003AupdateTrajet\u0028\u0029",
+            "name": "updateTrajet",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020les\u0020donn\u00E9es\u0020d\u2019un\u0020trajet\u0020existant.",
+            "url": "classes/Models-Trajet.html#method_updateTrajet"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Supprime\u0020un\u0020trajet\u0020par\u0020son\u0020identifiant.",
+            "url": "classes/Models-Trajet.html#method_delete"
+        },                {
+            "fqsen": "\\Models\\Trajet\u003A\u003A\u0024db",
+            "name": "db",
+            "summary": "Instance\u0020PDO\u0020pour\u0020la\u0020connexion\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-Trajet.html#property_db"
+        },                {
+            "fqsen": "\\Models\\User",
+            "name": "User",
+            "summary": "Classe\u0020User",
+            "url": "classes/Models-User.html"
+        },                {
+            "fqsen": "\\Models\\User\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructeur",
+            "url": "classes/Models-User.html#method___construct"
+        },                {
+            "fqsen": "\\Models\\User\u003A\u003AsetPasswordByEmail\u0028\u0029",
+            "name": "setPasswordByEmail",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020le\u0020mot\u0020de\u0020passe\u0020d\u2019un\u0020utilisateur\u0020\u00E0\u0020partir\u0020de\u0020son\u0020adresse\u0020email.",
+            "url": "classes/Models-User.html#method_setPasswordByEmail"
+        },                {
+            "fqsen": "\\Models\\User\u003A\u003AgetAllUser\u0028\u0029",
+            "name": "getAllUser",
+            "summary": "R\u00E9cup\u00E8re\u0020tous\u0020les\u0020utilisateurs\u0020de\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-User.html#method_getAllUser"
+        },                {
+            "fqsen": "\\Models\\User\u003A\u003A\u0024db",
+            "name": "db",
+            "summary": "Instance\u0020PDO\u0020pour\u0020la\u0020connexion\u0020\u00E0\u0020la\u0020base\u0020de\u0020donn\u00E9es.",
+            "url": "classes/Models-User.html#property_db"
         },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
             "url": "namespaces/default.html"
+        },                {
+            "fqsen": "\\Config",
+            "name": "Config",
+            "summary": "",
+            "url": "namespaces/config.html"
+        },                {
+            "fqsen": "\\Controllers",
+            "name": "Controllers",
+            "summary": "",
+            "url": "namespaces/controllers.html"
+        },                {
+            "fqsen": "\\Models",
+            "name": "Models",
+            "summary": "",
+            "url": "namespaces/models.html"
         }            ]
 );

@@ -10,7 +10,7 @@
                 <nav class="admin-nav">
                   <a href="index.php?action=ListUsers">Utilisateurs</a>
                     <a href="index.php?action=List-agences">Agences</a>
-                    <a href="index.php?action=trajets">Trajets</a>
+                    <a href="index.php?action=listTrajets">Trajets</a>
          
                     
                  

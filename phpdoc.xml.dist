@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>Documentation TPK</title>
+  
+  <parser>
+    <target>build/parser</target>
+  </parser>
+
+  <transformer>
+    <target>docs</target>
+  </transformer>
+
+  <files>
+    <directory>models</directory>
+    <directory>controllers</directory>
+    <directory>config</directory>
+  </files>
+</phpdoc>
