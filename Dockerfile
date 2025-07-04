@@ -1,20 +1,26 @@
-# Utilise une image PHP avec Apache et Composer
+# Utilise l’image officielle PHP 8.3 avec Apache
 FROM php:8.3-apache
 
-# Active mod_rewrite
+# Installe les extensions nécessaires (ex : pdo_mysql pour MySQL)
+RUN docker-php-ext-install pdo pdo_mysql
+
+# Active le module Apache rewrite
 RUN a2enmod rewrite
 
-# Copie tout le code dans le conteneur
+# Copie le code source dans le container
 COPY . /var/www/html/
 
-# Définit le répertoire de travail
+# Définit le dossier racine
 WORKDIR /var/www/html/
 
-# Installe Composer si pas déjà dans l'image
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Installe Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Installe les dépendances PHP via Composer
-RUN composer install
+# Installe les dépendances PHP
+RUN composer install --no-dev --optimize-autoloader
 
-# Donne les bons droits (optionnel mais recommandé)
-RUN chown -R www-data:www-data /var/www/html
+# Donne les bons droits d'accès
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
+# Expose le port utilisé par Apache
+EXPOSE 80
