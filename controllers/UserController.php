@@ -67,7 +67,7 @@ class UserController
             $users = $userModel->getAllUser();
 
             // Chargement de la vue avec les données utilisateurs
-            require __DIR__ . '/../views/users/list-users.php';
+            require __DIR__ . '/../views/users/List-users.php';
         } else {
             // Requête non autorisée
             http_response_code(405);
