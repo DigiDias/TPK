@@ -8,6 +8,12 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && docker-php-ext-install pdo pdo_mysql
 
+# Activer mod_rewrite pour les .htaccess
+RUN a2enmod rewrite
+
+# Modifier la configuration Apache pour permettre les .htaccess
+RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
 # Copier les fichiers de l'application
 COPY . /var/www/html/
 
