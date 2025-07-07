@@ -36,7 +36,7 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
         </div>
     <?php endif; ?>
 
-    <form method="post" action="index.php?action=updateTrajet&id_trajet=<?= $trajet['id_trajet'] ?>">
+    <form method="post" action="/trajets/modifier/<?= $trajet['id_trajet'] ?>">
 
         <div class="mb-3">
             <label for="agence_depart_id" class="form-label">Agence de départ</label>
@@ -88,7 +88,7 @@ if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
         </div>
 
         <div class="d-flex justify-content-between">
-            <a href="index.php?action=listTrajets" class="btn btn-secondary">Annuler</a>
+            <a href="/trajets" class="btn btn-secondary">Annuler</a>
             <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
         </div>
     </form>

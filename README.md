@@ -48,6 +48,7 @@ Le projet a été réalisé dans le cadre d’un exercice (CEF Developpeur Web e
 
 - PHP 8.x
 - MySQL / MariaDB (alwaysdata.com)
+- Izniburak pour le router
 - intérrogation de la base de donnée : Workbench
 - test route (connexion) : Postman
 - HTML / CSS et SCSS/ 

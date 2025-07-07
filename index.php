@@ -1,24 +1,41 @@
 <?php
+// index.php
 
-/**
- * Point d’entrée principal de l’application.
- * 
- * Ce fichier initialise la session, configure l'autoloader, établit la connexion
- * à la base de données et charge les routes de l'application.
- */
+// En haut de ton index.php
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Chargement de l'autoloader généré par Composer
+// Autoloader Composer
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Config\Database;
+use Buki\Router\Router;
 
-// Initialisation de la connexion à la base de données
+// Connexion à la base de données
 $database = new Database();
 $pdo = $database->getConnection();
 
-// Inclusion des routes de l'application
+// Configuration du routeur
+$router = new Router([
+    'paths' => [
+        'controllers' => 'controllers',
+    ],
+    'namespaces' => [
+        'controllers' => 'Controllers',
+    ],
+  
+
+      
+]);
+
+
+// Routes
 require_once __DIR__ . '/routes/web.php';
+
+
+// Lancement du routeur
+$router->run();

@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\Agence;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Contrôleur gérant les opérations liées aux agences.
@@ -12,24 +13,29 @@ class AgenceController
     /**
      * Affiche la liste de toutes les agences.
      *
-     * @return void
+     * @return Response
      */
-    public function allAgences(): void
+    public function allAgences(): Response
     {
         $agenceModel = new Agence();
         $agences = $agenceModel->getAll();
+
+        ob_start();
         require __DIR__ . '/../views/agences/agences.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 
     /**
-     * Crée une nouvelle agence.
+     * Crée une nouvelle agence ou affiche le formulaire.
      *
-     * - Si la requête est en POST, tente de créer l’agence avec les données soumises.
-     * - Sinon, affiche le formulaire de création.
+     * - Si la requête est POST, tente de créer l’agence.
+     * - Sinon, affiche le formulaire.
      *
-     * @return void
+     * @return Response
      */
-    public function creer(): void
+    public function creer(): Response
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = trim($_POST['nom'] ?? '');
@@ -37,33 +43,36 @@ class AgenceController
             if ($nom) {
                 $agenceModel = new Agence();
                 $agenceModel->create($nom);
-                header("Location: index.php?action=List-agences");
+                header("Location: /agences"); // Redirection HTTP classique
                 exit;
-            } else {
-                $_SESSION['error'] = "Le nom est requis.";
             }
+
+            $_SESSION['error'] = "Le nom est requis.";
         }
 
+        ob_start();
         require __DIR__ . '/../views/agences/form-agence.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 
     /**
      * Modifie une agence existante.
      *
-     * - Affiche le formulaire avec les données de l’agence.
-     * - Si la requête est en POST, met à jour l’agence.
+     * - Affiche le formulaire avec les données actuelles.
+     * - Si la requête est POST, effectue la mise à jour.
      *
      * @param int $id L'identifiant de l'agence à modifier
-     * @return void
+     * @return Response
      */
-    public function modifier(int $id): void
+    public function modifier(int $id): Response
     {
         $agenceModel = new Agence();
         $agence = $agenceModel->getById($id);
 
         if (!$agence) {
-            echo "Agence introuvable.";
-            return;
+            return new Response("Agence introuvable", 404);
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -71,27 +80,32 @@ class AgenceController
 
             if ($nom) {
                 $agenceModel->update($id, $nom);
-                header("Location: index.php?action=List-agences");
+                header("Location: /agences");
                 exit;
-            } else {
-                $_SESSION['error'] = "Le nom est requis.";
             }
+
+            $_SESSION['error'] = "Le nom est requis.";
         }
 
+        ob_start();
         require __DIR__ . '/../views/agences/form-agence.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 
     /**
      * Supprime une agence.
      *
      * @param int $id L'identifiant de l'agence à supprimer
-     * @return void
+     * @return Response
      */
-    public function supprimer(int $id): void
+    public function supprimer(int $id): Response
     {
         $agenceModel = new Agence();
         $agenceModel->delete($id);
-        header("Location: index.php?action=List-agences");
+
+        header("Location: /agences");
         exit;
     }
 }

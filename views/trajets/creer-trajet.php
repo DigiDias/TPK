@@ -33,7 +33,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
 
-                    <form method="post" action="index.php?action=store-trajet">
+                    <form method="post" action="/trajets">
                         <!-- Agence de départ -->
                         <div class="mb-3">
                             <label for="agence_depart_id" class="form-label">Agence de départ</label>
@@ -87,7 +87,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
                         <!-- Boutons -->
                         <div class="d-flex justify-content-between">
-                            <a href="index.php?action=listTrajets" class="btn btn-secondary">Annuler</a>
+                            <a href="/trajets" class="btn btn-secondary">Annuler</a>
                             <button type="submit" class="btn btn-success">Créer le trajet</button>
                         </div>
                     </form>

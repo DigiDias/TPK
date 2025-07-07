@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use Models\User;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Contrôleur gérant les opérations liées aux utilisateurs.
@@ -22,34 +24,30 @@ class UserController
      * - 404 : Utilisateur introuvable
      * - 405 : Méthode HTTP non autorisée
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function updatePassword(): void
+    public function updatePassword(): JsonResponse
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $email = $data['email'] ?? null;
-            $password = $data['password'] ?? null;
-
-            if (!$email || !$password) {
-                http_response_code(400);
-                echo json_encode(["error" => "Email et mot de passe requis."]);
-                return;
-            }
-
-            $userModel = new User();
-            $success = $userModel->setPasswordByEmail($email, $password);
-
-            if ($success) {
-                echo json_encode(["message" => "Mot de passe mis à jour avec succès."]);
-            } else {
-                http_response_code(404);
-                echo json_encode(["error" => "Utilisateur non trouvé."]);
-            }
-        } else {
-            http_response_code(405);
-            echo json_encode(["error" => "Méthode non autorisée."]);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return new JsonResponse(['error' => 'Méthode non autorisée.'], 405);
         }
+
+        $data = json_decode(file_get_contents("php://input"), true);
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+
+        if (!$email || !$password) {
+            return new JsonResponse(['error' => 'Email et mot de passe requis.'], 400);
+        }
+
+        $userModel = new User();
+        $success = $userModel->setPasswordByEmail($email, $password);
+
+        if ($success) {
+            return new JsonResponse(['message' => 'Mot de passe mis à jour avec succès.']);
+        }
+
+        return new JsonResponse(['error' => 'Utilisateur non trouvé.'], 404);
     }
 
     /**
@@ -58,20 +56,21 @@ class UserController
      * Cette méthode est accessible uniquement via une requête GET.
      * Les données sont récupérées depuis le modèle User et envoyées à la vue `list-users.php`.
      *
-     * @return void
+     * @return Response
      */
-    public function AllUsers(): void
+    public function AllUsers(): Response
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $userModel = new User();
-            $users = $userModel->getAllUser();
-
-            // Chargement de la vue avec les données utilisateurs
-            require __DIR__ . '/../views/users/List-users.php';
-        } else {
-            // Requête non autorisée
-            http_response_code(405);
-            echo "Méthode non autorisée.";
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            return new Response("Méthode non autorisée.", 405);
         }
+
+        $userModel = new User();
+        $users = $userModel->getAllUser();
+
+        ob_start();
+        require __DIR__ . '/../views/users/List-users.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 }

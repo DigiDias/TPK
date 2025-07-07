@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <!-- Bouton pour créer une nouvelle agence -->
     <div class="mb-3 text-end">
-        <a href="index.php?action=creerAgence" class="btn btn-success">
+        <a href="/agences/creer" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Nouvelle agence
         </a>
     </div>
@@ -41,11 +41,11 @@ if (session_status() === PHP_SESSION_NONE) {
                         <td><?= htmlspecialchars($agence['nom']) ?></td>
                         <td class="text-center">
                             <!-- Bouton modifier -->
-                            <a href="index.php?action=modifierAgence&id_agence=<?= urlencode($agence['id_agence']) ?>" class="btn btn-sm btn-warning">
+                            <a href="/agences/modifier/<?= urlencode($agence['id_agence']) ?>" class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <!-- Bouton supprimer -->
-                            <a href="index.php?action=supprimerAgence&id_agence=<?= urlencode($agence['id_agence']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette agence ?');">
+                            <a href="/agences/supprimer/<?= urlencode($agence['id_agence']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette agence ?');">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
@@ -58,7 +58,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php endif; ?>
 
     <div class="mt-4">
-        <a href="index.php?action=listTrajets" class="btn btn-secondary">← Retour aux trajets</a>
+        <a href="/trajets" class="btn btn-secondary">← Retour aux trajets</a>
     </div>
 </div>
 

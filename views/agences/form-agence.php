@@ -5,8 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $isEditing = isset($agence); // Si on modifie ou on crée
 $actionUrl = $isEditing
-    ? "index.php?action=modifierAgence&id_agence=" . urlencode($agence['id_agence'])
-    : "index.php?action=creerAgence";
+    ? "/agences/modifier/" . urlencode($agence['id_agence'])
+    : "/agences/creer/";
 $nomValue = $isEditing ? htmlspecialchars($agence['nom']) : '';
 ?>
 
@@ -44,7 +44,7 @@ $nomValue = $isEditing ? htmlspecialchars($agence['nom']) : '';
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="index.php?action=List-agences" class="btn btn-secondary">Annuler</a>
+                            <a href="/agences" class="btn btn-secondary">Annuler</a>
                             <button type="submit" class="btn btn-success"><?= $isEditing ? "Enregistrer les modifications" : "Créer" ?></button>
                         </div>
                     </form>

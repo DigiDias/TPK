@@ -131,10 +131,10 @@ if (session_status() === PHP_SESSION_NONE) {
             $_SESSION['user']['role'] === 'admin'
         )
     ): ?>
-       <a href="index.php?action=modifier&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-warning">
+       <a href="/trajets/modifier/<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-warning">
     <i class="bi bi-pencil"></i>
 </a>
-        <a href="index.php?action=supprimer&id_trajet=<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce trajet ?');">
+        <a href="/trajets/supprimer/<?= urlencode($trajet['id_trajet']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce trajet ?');">
             <i class="bi bi-trash"></i>
         </a>
     <?php endif; ?>
@@ -145,6 +145,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 Participer
                             </a>
                         </td> -->
+                      
                     </tr>
                 <?php endforeach; ?>
             </tbody>

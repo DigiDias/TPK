@@ -23,7 +23,7 @@
             </div>
         <?php endif; ?>
 
-        <form method="post" action="index.php?action=login">
+        <form method="post" action="/login">
             <div class="mb-3">
                 <label for="email" class="form-label text-dark">Adresse e-mail</label>
                 <input type="email" class="form-control border-0 shadow-sm" id="email" name="email" required autofocus>

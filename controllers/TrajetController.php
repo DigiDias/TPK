@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Models\Trajet;
 use Models\Agence;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Contrôleur chargé de gérer les trajets (liste, création, modification, suppression).
@@ -11,37 +13,50 @@ use Models\Agence;
 class TrajetController
 {
     /**
-     * Affiche la liste de tous les trajets à venir.
+     * Affiche la liste de tous les trajets.
      *
-     * @return void
+     * @return Response
      */
-    public function liste(): void
+    public function liste(): Response
     {
         $trajetModel = new Trajet();
         $trajets = $trajetModel->getAll();
+
+        ob_start();
         require __DIR__ . '/../views/trajets/liste.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 
     /**
-     * Affiche le formulaire de création d'un nouveau trajet.
+     * Affiche le formulaire de création d’un trajet.
      *
-     * @return void
+     * @return Response
      */
-    public function creer(): void
+    public function creer(): Response
     {
         $agenceModel = new Agence();
         $agences = $agenceModel->getAll();
+
+        ob_start();
         require __DIR__ . '/../views/trajets/creer-trajet.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 
     /**
      * Affiche le formulaire de modification d’un trajet.
      *
      * @param int $id_trajet ID du trajet à modifier
-     * @return void
+     * @return Response
      */
-    public function modifier(int $id_trajet): void
+    public function modifier(int $id_trajet): Response
     {
+        
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
         $trajetModel = new Trajet();
         $agenceModel = new Agence();
 
@@ -49,33 +64,41 @@ class TrajetController
         $agences = $agenceModel->getAll();
 
         if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
-            die('Accès non autorisé.');
+            return new Response('Accès non autorisé.', 403);
         }
 
+            
+
+    if (!$trajet || $_SESSION['user']['id'] != $trajet['id_createur']) {
+        return new Response('Accès non autorisé.', 403);
+    }
+
+
+        ob_start();
         require __DIR__ . '/../views/trajets/modification-trajet.php';
+        $content = ob_get_clean();
+
+        return new Response($content);
     }
 
     /**
-     * Met à jour les données d’un trajet après modification.
+     * Met à jour les informations d’un trajet après soumission du formulaire.
      *
      * @param int $id_trajet ID du trajet à mettre à jour
-     * @return void
+     * @return RedirectResponse
      */
-    public function update(int $id_trajet): void
+    public function update(int $id_trajet): RedirectResponse
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        if (session_status() === PHP_SESSION_NONE) session_start();
 
-        $depart         = $_POST['agence_depart_id'];
-        $arrivee        = $_POST['agence_arrivee_id'];
-        $dateDepart     = $_POST['date_depart'];
-        $heureDepart    = $_POST['heure_depart'];
-        $dateArrivee    = $_POST['date_arrivee'];
-        $heureArrivee   = $_POST['heure_arrivee'];
-        $today          = date('Y-m-d');
+        $depart       = $_POST['agence_depart_id'];
+        $arrivee      = $_POST['agence_arrivee_id'];
+        $dateDepart   = $_POST['date_depart'];
+        $heureDepart  = $_POST['heure_depart'];
+        $dateArrivee  = $_POST['date_arrivee'];
+        $heureArrivee = $_POST['heure_arrivee'];
+        $today        = date('Y-m-d');
 
-        // Règles métier
         if ($depart === $arrivee) {
             $_SESSION['error'] = "L'agence de départ ne peut pas être la même que l'agence d'arrivée.";
         } elseif ($dateDepart < $today) {
@@ -87,37 +110,34 @@ class TrajetController
         }
 
         if (!empty($_SESSION['error'])) {
-            header("Location: index.php?action=modifier&id_trajet=" . $id_trajet);
-            exit;
+            return new RedirectResponse("/trajets/modifier/$id_trajet");
         }
 
         $trajetModel = new Trajet();
         $trajetModel->updateTrajet($id_trajet, $_POST);
 
         $_SESSION['success'] = "Le trajet a été modifié.";
-        header('Location: index.php?action=listTrajets');
-        exit;
+        return new RedirectResponse("/trajets");
     }
 
     /**
-     * Enregistre un nouveau trajet dans la base de données.
+     * Enregistre un nouveau trajet après validation.
      *
-     * @return void
+     * @return RedirectResponse
      */
-    public function store(): void
+    public function store(): RedirectResponse
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-        $depart      = $_POST['agence_depart_id'];
-        $arrivee     = $_POST['agence_arrivee_id'];
-        $dateDepart  = $_POST['date_depart'];
-        $heureDepart = $_POST['heure_depart'];
-        $dateArrivee = $_POST['date_arrivee'];
-        $heureArrivee= $_POST['heure_arrivee'];
-        $places      = $_POST['places_dispo'];
-        $today       = date('Y-m-d');
+        $depart       = $_POST['agence_depart_id'];
+        $arrivee      = $_POST['agence_arrivee_id'];
+        $dateDepart   = $_POST['date_depart'];
+        $heureDepart  = $_POST['heure_depart'];
+        $dateArrivee  = $_POST['date_arrivee'];
+        $heureArrivee = $_POST['heure_arrivee'];
+        $places       = $_POST['places_dispo'];
+        $today        = date('Y-m-d');
 
-        // Règles métier
         if ($depart === $arrivee) {
             $_SESSION['error'] = "L'agence de départ ne peut pas être la même que l'agence d'arrivée.";
         } elseif ($dateDepart < $today) {
@@ -129,8 +149,7 @@ class TrajetController
         }
 
         if (!empty($_SESSION['error'])) {
-            header("Location: index.php?action=creer");
-            exit;
+            return new RedirectResponse("/trajets/creer");
         }
 
         $trajetModel = new Trajet();
@@ -148,41 +167,32 @@ class TrajetController
         ]);
 
         $_SESSION['success'] = "Trajet créé avec succès.";
-        header("Location: index.php?action=listTrajets");
-        exit;
+        return new RedirectResponse("/trajets");
     }
 
     /**
-     * Supprime un trajet par son ID s'il appartient au créateur.
+     * Supprime un trajet si l'utilisateur est le créateur ou un admin.
      *
-     * @param int $id_trajet ID du trajet à supprimer
-     * @return void
+     * @param int $id_trajet
+     * @return RedirectResponse
      */
-public function supprimer(int $id_trajet): void
-{
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+    public function supprimer(int $id_trajet): RedirectResponse
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $trajetModel = new Trajet();
+        $trajet = $trajetModel->getById($id_trajet);
+
+        if (
+            !$trajet ||
+            ($_SESSION['user']['id'] != $trajet['id_createur'] && $_SESSION['user']['role'] !== 'admin')
+        ) {
+            $_SESSION['error'] = "Suppression non autorisée.";
+            return new RedirectResponse("/trajets");
+        }
+
+        $trajetModel->delete($id_trajet);
+        $_SESSION['success'] = "Trajet supprimé avec succès.";
+        return new RedirectResponse("/trajets");
     }
-
-    $trajetModel = new Trajet();
-    $trajet = $trajetModel->getById($id_trajet);
-
-    // Vérifie si le trajet existe et si l'utilisateur est soit le créateur, soit un admin
-    if (
-        !$trajet ||
-        (
-            $_SESSION['user']['id'] != $trajet['id_createur'] &&
-            $_SESSION['user']['role'] !== 'admin'
-        )
-    ) {
-        $_SESSION['error'] = "Suppression non autorisée.";
-        header("Location: index.php?action=listTrajets");
-        exit;
-    }
-
-    $trajetModel->delete($id_trajet);
-    $_SESSION['success'] = "Trajet supprimé avec succès.";
-    header("Location: index.php?action=listTrajets");
-    exit;
-}
 }

@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use Models\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Contrôleur gérant les opérations d'authentification.
@@ -10,19 +12,18 @@ use Models\Auth;
 class AuthController
 {
     /**
-     * Gère la connexion de l'utilisateur.
+     * Gère l'affichage du formulaire de connexion et la vérification des identifiants.
      *
      * - Si la méthode est POST :
      *   - Récupère les identifiants.
      *   - Vérifie leur validité via le modèle `Auth`.
-     *   - Si valides, initialise la session et stocke les infos utilisateur.
-     *   - Redirige vers la page des trajets.
-     * - Sinon :
-     *   - Affiche le formulaire de connexion.
+     *   - Si valides, initialise la session et redirige vers les trajets.
+     *   - Sinon, affiche un message d'erreur.
+     * - Si GET : affiche le formulaire de connexion.
      *
-     * @return void
+     * @return Response|RedirectResponse
      */
-    public function login(): void
+    public function login(): Response|RedirectResponse
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
@@ -32,32 +33,39 @@ class AuthController
             $user = $auth->verifyCredentials($email, $password);
 
             if ($user && isset($user['id_user'])) {
-                // Démarrage de la session si non encore démarrée
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
                 }
 
-                // Enregistrement des infos utilisateur dans la session
                 $_SESSION['user'] = [
                     'id'     => $user['id_user'],
                     'prenom' => $user['prenom'],
                     'nom'    => $user['nom'],
                     'email'  => $user['email'],
+                    'tel'    => $user['tel'] ?? '',
                     'role'   => $user['role'] ?? 'user'
                 ];
 
-                // Redirection après connexion réussie
-                header("Location: index.php?action=listTrajets");
-                exit;
+                return new RedirectResponse('/trajets');
             } else {
-                // Échec de connexion
+                // Erreur de connexion
                 $error = "Email ou mot de passe incorrect.";
+
+                ob_start();
                 require __DIR__ . '/../views/Auth/Auth.php';
+                $content = ob_get_clean();
+
+                return new Response($content);
             }
         } else {
-            // Affichage du formulaire
+            // Affichage du formulaire de login
             $error = "";
+
+            ob_start();
             require __DIR__ . '/../views/Auth/Auth.php';
+            $content = ob_get_clean();
+
+            return new Response($content);
         }
     }
 }

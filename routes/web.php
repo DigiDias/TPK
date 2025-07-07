@@ -1,116 +1,60 @@
 <?php
 
-/**
- * Routeur principal de l'application.
- *
- * Ce fichier analyse le paramètre `action` passé via l'URL
- * et délègue la logique correspondante au bon contrôleur.
- */
+/** @var \Buki\Router\Router $router */
 
-// Import des contrôleurs
 use Controllers\TrajetController;
 use Controllers\ParticipationController;
 use Controllers\UserController;
 use Controllers\AuthController;
-use Controllers\AgenceController; // Gestion des agences
-use Config\Database; // Pour initialiser PDO si besoin
+use Controllers\AgenceController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-// Détermination de l'action demandée via l'URL (GET)
-$action = $_GET['action'] ?? 'listTrajets';
 
-// Logique de routage
-switch ($action) {
 
-    // Authentification
-    case 'login':
-        (new AuthController())->login();
-        break;
+$router->get('/test/:id', function ($id) {
+    return new Response("Route TEST OK - ID = $id"); // <- OK
+});
 
-    case 'logout':
-        session_destroy();
-        header('Location: index.php?action=listTrajets');
-        exit;
+// Authentification
+$router->get('/login', [AuthController::class, 'login']);
 
-    // Trajets
-    case 'listTrajets':
-        (new TrajetController())->liste();
-        break;
+// Pour la déconnexion, retourner un RedirectResponse
+$router->get('/logout', function () {
+    session_destroy();
+    return new RedirectResponse('/trajets');
+});
 
-    case 'creer':
-        (new TrajetController())->creer();
-        break;
+// Trajets
+$router->post('/login', [AuthController::class, 'login']);
 
-    case 'store-trajet':
-        (new TrajetController())->store();
-        break;
+$router->get('/', [TrajetController::class, 'liste']);
+$router->get('/trajets', [TrajetController::class, 'liste']);
+$router->get('/trajets/creer', [TrajetController::class, 'creer']);
+$router->post('/trajets', [TrajetController::class, 'store']);
+$router->get('/trajets/modifier/:id', [TrajetController::class, 'modifier']);
 
-    case 'modifier':
-        if (isset($_GET['id_trajet'])) {
-            (new TrajetController())->modifier((int)$_GET['id_trajet']);
-        } else {
-            echo "ID de trajet manquant.";
-        }
-        break;
+$router->post('/trajets/modifier/:id', [TrajetController::class, 'update']);
+$router->get('/trajets/supprimer/:id', [TrajetController::class, 'supprimer']);
 
-    case 'updateTrajet':
-        if (isset($_GET['id_trajet'])) {
-            (new TrajetController())->update((int)$_GET['id_trajet']);
-        } else {
-            echo "ID de trajet manquant.";
-        }
-        break;
+// Participations
+$router->get('/trajets/:id_trajet/participer', function ($id_trajet) {
+    $pdo = (new \Config\Database())->getConnection();
+    return (new ParticipationController($pdo))->form((int)$id_trajet);
+});
+$router->post('/participation', function () {
+    $pdo = (new \Config\Database())->getConnection();
+    return (new ParticipationController($pdo))->store();
+});
 
-    case 'supprimer':
-        if (isset($_GET['id_trajet'])) {
-            (new TrajetController())->supprimer((int)$_GET['id_trajet']);
-        } else {
-            echo "ID de trajet manquant.";
-        }
-        break;
+// Utilisateurs
+$router->get('/utilisateurs', [UserController::class, 'AllUsers']);
+$router->post('/utilisateurs/update-password', [UserController::class, 'updatePassword']);
 
-    // Utilisateurs
-    case 'ListUsers':
-        (new UserController())->AllUsers();
-        break;
-
-    case 'update_password':
-        (new UserController())->updatePassword();
-        break;
-
-    // Participations
-    case 'participer':
-        if (isset($_GET['id_trajet'])) {
-            $pdo = (new Database())->getConnection();
-            (new ParticipationController($pdo))->form((int)$_GET['id_trajet']);
-        } else {
-            echo "ID de trajet manquant.";
-        }
-        break;
-
-    case 'store-participation':
-        $pdo = (new Database())->getConnection();
-        (new ParticipationController($pdo))->store();
-        break;
-
-    // Agences
-    case 'List-agences':
-        (new AgenceController())->allAgences();
-        break;
-
-    case 'creerAgence':
-        (new AgenceController())->creer();
-        break;
-
-    case 'modifierAgence':
-        (new AgenceController())->modifier((int)$_GET['id_agence']);
-        break;
-
-    case 'supprimerAgence':
-        (new AgenceController())->supprimer((int)$_GET['id_agence']);
-        break;
-
-    // Action inconnue
-    default:
-        echo "Action inconnue.";
-        break;
-}
+// Agences
+$router->get('/agences', [AgenceController::class, 'allAgences']);
+$router->post('/agences/modifier/:id', [AgenceController::class, 'modifier']);
+$router->get('/agences/creer', [AgenceController::class, 'creer']);
+$router->post('/agences/creer', [AgenceController::class, 'creer']);
+$router->get('/agences/modifier/:id', [AgenceController::class, 'modifier']);
+$router->get('/agences/supprimer/:id', [AgenceController::class, 'supprimer']);
